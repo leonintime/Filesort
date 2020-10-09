@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +26,7 @@ public class Filesort {
     }
 
 
-    public void sortFiles() {
+    public int sortFiles() {
         try {
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
@@ -38,11 +37,7 @@ public class Filesort {
                     Path temp = Files.move(Paths.get(currentPath + fileName),
                             Paths.get(destinationPath + fileName));
                     wordFileAmount++;
-                    if (temp != null) {
-                        System.out.println(fileName + "got successfully moved");
-                    } else {
-                        System.out.println("Failed to move the file");
-                    }
+                    System.out.println(fileName + "got successfully moved");
                 }
 
                 // Excel Dateien werden sortiert
@@ -50,11 +45,7 @@ public class Filesort {
                     Path temp = Files.move(Paths.get(currentPath + fileName),
                             Paths.get(destinationPath + fileName));
                     excelFileAmount++;
-                    if (temp != null) {
-                        System.out.println(fileName + "got successfully moved");
-                    } else {
-                        System.out.println("Failed to move the file");
-                    }
+                    System.out.println(fileName + "got successfully moved");
                 }
 
 
@@ -63,34 +54,35 @@ public class Filesort {
                     Path temp = Files.move(Paths.get(currentPath + fileName),
                             Paths.get(destinationPath + fileName));
                     picAmount++;
-                    if (temp != null) {
-                        System.out.println(fileName + "got successfully moved");
-                    } else {
-                        System.out.println("Failed to move the file");
-                    }
+                    System.out.println(fileName + "got successfully moved");
 
                     // Pdf Dateien werden sortiert
                 } else if (fileName.contains(".pdf")) {
                     Path temp = Files.move(Paths.get(currentPath + fileName),
                             Paths.get(destinationPath + fileName));
                     pdfAmount++;
-                    if (temp != null) {
-                        System.out.println(fileName + "got successfully moved");
-                    } else {
-                        System.out.println("Failed to move the file");
-                    }
+                    System.out.println(fileName + "got successfully moved");
                 }
-
             }
+            if (wordFileAmount > 0) {
+                return wordFileAmount;
+            } else if (excelFileAmount > 0) {
+                return excelFileAmount;
+            } else if (pdfAmount > 0) {
+                return pdfAmount;
+            } else {
+                return picAmount;
+            }
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        return -1;
     }
 
-
-
-
-
+    public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
+        return filesDesktop + filesDownload;
+    }
 
 
 }
