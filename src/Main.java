@@ -39,12 +39,11 @@ public class Main {
         int pdfFilesCountedDesktop = sortPdfFilesDesktop.sortFiles();
         int picturesFilesCountedDesktop = sortPicturesDesktop.sortFiles();
 
-
+        // Desktop and download files are added together to calculate the total amount
         int totalWordFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop);
         int totalExcelFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(excelFilesCountedDownload, excelFilesCountedDesktop);
         int totalPdfFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(pdfFilesCountedDownload, pdfFilesCountedDesktop);
         int totalPictureFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(pictureFilesCountedDownload, picturesFilesCountedDesktop);
-
 
 
         // Files moved from the download folder
