@@ -64,7 +64,7 @@ public class Main {
         System.out.println(pictureFilesCountedDownload + " pictures got moved from " + desktop);
         System.out.println("\n");
 
-        System.out.println("/////Total files /////");
+        System.out.println("/////Total files/////");
         System.out.println(totalWordFilesMoved + " word files got moved");
         System.out.println(totalExcelFilesMoved + " excel files got moved");
         System.out.println(totalPdfFilesMoved + " pdf files got moved");

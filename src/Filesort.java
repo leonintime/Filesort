@@ -70,8 +70,10 @@ public class Filesort {
                 return excelFileAmount;
             } else if (pdfAmount > 0) {
                 return pdfAmount;
-            } else {
+            } else if (picAmount > 0) {
                 return picAmount;
+            } else {
+                return -1;
             }
 
         } catch (Exception ex) {
