@@ -48,27 +48,38 @@ public class Main {
 
         // Files moved from the download folder
         System.out.println("\n");
-        System.out.println("/////Download files/////");
-        System.out.println(wordFilesCountedDownload + " word files got moved from " + downloadFolder);
-        System.out.println(excelFilesCountedDownload + " excel files got moved from " + downloadFolder);
-        System.out.println(pdfFilesCountedDownload + " pdf files got moved from " + downloadFolder);
-        System.out.println(pictureFilesCountedDownload + " pictures got moved from " + downloadFolder);
-        System.out.println("\n");
+        System.out.println("/////Files moved/////");
+        if (wordFilesCountedDownload < 0 && wordFilesCountedDesktop < 0) {
+            System.out.println("No movable word files were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+        } else {
+            System.out.println(wordFilesCountedDownload + " word files got moved from " + downloadFolder);
+            System.out.println(wordFilesCountedDesktop + " word files got moved from " + desktop);
+            System.out.println("A total of " + totalWordFilesMoved + " word files got moved");
+        }
 
+        if (excelFilesCountedDownload < 0 && excelFilesCountedDesktop < 0) {
+            System.out.println("No movable excel files were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+        } else {
+            System.out.println(excelFilesCountedDownload + " excel files got moved from " + downloadFolder);
+            System.out.println(excelFilesCountedDesktop + " excel files got moved from " + desktop);
+            System.out.println("A total of " + totalExcelFilesMoved + " excel files got moved");
+        }
 
-        // Files moved from the desktop
-        System.out.println("/////Desktop files/////");
-        System.out.println(wordFilesCountedDownload + " word files got moved from " + desktop);
-        System.out.println(excelFilesCountedDownload + " excel files got moved from " + desktop);
-        System.out.println(pdfFilesCountedDownload + " pdf files got moved from " + desktop);
-        System.out.println(pictureFilesCountedDownload + " pictures got moved from " + desktop);
-        System.out.println("\n");
+        if (pdfFilesCountedDownload < 0 && pdfFilesCountedDesktop < 0) {
+            System.out.println("No movable pdf files were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+        } else {
+            System.out.println(pdfFilesCountedDownload + " pdf files got moved from " + downloadFolder);
+            System.out.println(pdfFilesCountedDesktop + " pdf files got moved from " + desktop);
+            System.out.println("A total of " + totalPdfFilesMoved + " pdf files got moved");
+        }
 
-        System.out.println("/////Total files/////");
-        System.out.println(totalWordFilesMoved + " word files got moved");
-        System.out.println(totalExcelFilesMoved + " excel files got moved");
-        System.out.println(totalPdfFilesMoved + " pdf files got moved");
-        System.out.println(totalPictureFilesMoved + " pictures got moved");
+        if (pictureFilesCountedDownload < 0 && picturesFilesCountedDesktop < 0) {
+            System.out.println("No movable pictures were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+        } else {
+            System.out.println(pictureFilesCountedDownload + " pictures got moved from " + downloadFolder);
+            System.out.println(picturesFilesCountedDesktop + " pictures got moved from " + desktop);
+            System.out.println("A total of " + totalPictureFilesMoved + " pictures got moved");
+        }
 
 
     }
