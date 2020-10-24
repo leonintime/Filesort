@@ -73,13 +73,13 @@ public class Filesort {
             } else if (picAmount > 0) {
                 return picAmount;
             } else {
-                return -1;
+                return 0;
             }
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            return -1;
         }
-        return -1;
     }
 
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
