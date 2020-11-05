@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,7 +27,7 @@ public class Filesort {
     }
 
 
-    public int sortFiles() {
+    public int sortFilesWord() {
         try {
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
@@ -37,50 +38,88 @@ public class Filesort {
                     Path temp = Files.move(Paths.get(currentPath + fileName),
                             Paths.get(destinationPath + fileName));
                     wordFileAmount++;
-                    System.out.println(fileName + "got successfully moved");
+                    System.out.println(fileName + " got successfully moved");
                 }
 
-                // Excel Dateien werden sortiert
-                else if (fileName.contains(".xlsx")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    excelFileAmount++;
-                    System.out.println(fileName + "got successfully moved");
-                }
-
-
-                // Bild Dateien werden sortiert
-                else if (fileName.contains(".jpg") || fileName.contains(".jpeg") || fileName.contains(".gif") || fileName.contains(".png")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    picAmount++;
-                    System.out.println(fileName + "got successfully moved");
-
-                    // Pdf Dateien werden sortiert
-                } else if (fileName.contains(".pdf")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    pdfAmount++;
-                    System.out.println(fileName + "got successfully moved");
-                }
             }
-            if (wordFileAmount > 0) {
-                return wordFileAmount;
-            } else if (excelFileAmount > 0) {
-                return excelFileAmount;
-            } else if (pdfAmount > 0) {
-                return pdfAmount;
-            } else if (picAmount > 0) {
-                return picAmount;
-            } else {
-                return 0;
-            }
+            return wordFileAmount;
 
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (NullPointerException | IOException ex) {
+            System.out.println("There was an error while sorting the word files!");
             return -1;
         }
     }
+
+
+    public int sortFilesExcel() {
+        try {
+            File folder = new File(fileFolder);
+            File[] listedFiles = folder.listFiles();
+            for (File file : listedFiles) {
+                String fileName = file.getName();
+
+                // Excel Dateien werden sortiert
+                if (fileName.contains(".xlsx")) {
+                    Path temp = Files.move(Paths.get(currentPath + fileName),
+                            Paths.get(destinationPath + fileName));
+                    excelFileAmount++;
+                    System.out.println(fileName + " got successfully moved");
+                }
+            }
+
+        } catch (NullPointerException | IOException ex) {
+            System.out.println("There was an error while sorting the excel files!");
+            return -1;
+        }
+        return excelFileAmount;
+    }
+
+
+    public int sortFilesPdfs() {
+        try {
+            File folder = new File(fileFolder);
+            File[] listedFiles = folder.listFiles();
+            for (File file : listedFiles) {
+                String fileName = file.getName();
+
+                if (fileName.contains(".pdf")) {
+                    Path temp = Files.move(Paths.get(currentPath + fileName),
+                            Paths.get(destinationPath + fileName));
+                    pdfAmount++;
+                    System.out.println(fileName + " got successfully moved");
+                }
+            }
+
+        } catch (NullPointerException | IOException ex) {
+            System.out.println("There was an error while sorting the pdf files!");
+            return -1;
+        }
+        return pdfAmount;
+    }
+
+
+    public int sortFilesPictures() {
+        try {
+            File folder = new File(fileFolder);
+            File[] listedFiles = folder.listFiles();
+            for (File file : listedFiles) {
+                String fileName = file.getName();
+
+                if (fileName.contains(".jpg") || fileName.contains(".jpeg") || fileName.contains(".gif") || fileName.contains(".png")) {
+                    Path temp = Files.move(Paths.get(currentPath + fileName),
+                            Paths.get(destinationPath + fileName));
+                    picAmount++;
+                    System.out.println("There was an error while sorting the pictures!");
+                }
+            }
+
+        } catch (NullPointerException | IOException ex) {
+            System.out.println(ex.getMessage());
+            return -1;
+        }
+        return picAmount;
+    }
+
 
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
