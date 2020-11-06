@@ -49,7 +49,7 @@ public class Main {
         System.out.println("\n");
         System.out.println("/////Word files/////");
         if (wordFilesCountedDownload <= 0 && wordFilesCountedDesktop <= 0) {
-            System.out.println("No movable word files were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+            System.out.println("No movable word files were found.");
         } else {
             System.out.println(wordFilesCountedDownload + " word files got moved from " + downloadFolder);
             System.out.println(wordFilesCountedDesktop + " word files got moved from " + desktop);
@@ -57,7 +57,7 @@ public class Main {
         }
         System.out.println("/////Excel files/////");
         if (excelFilesCountedDownload <= 0 && excelFilesCountedDesktop <= 0) {
-            System.out.println("No movable excel files were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+            System.out.println("No movable excel files were found in.");
         } else {
             System.out.println(excelFilesCountedDownload + " excel files got moved from " + downloadFolder);
             System.out.println(excelFilesCountedDesktop + " excel files got moved from " + desktop);
@@ -66,7 +66,7 @@ public class Main {
 
         System.out.println("/////Pdf files/////");
         if (pdfFilesCountedDownload <= 0 && pdfFilesCountedDesktop <= 0) {
-            System.out.println("No movable pdf files were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+            System.out.println("No movable pdf files were found in.");
         } else {
             System.out.println(pdfFilesCountedDownload + " pdf files got moved from " + downloadFolder);
             System.out.println(pdfFilesCountedDesktop + " pdf files got moved from " + desktop);
@@ -74,7 +74,7 @@ public class Main {
         }
         System.out.println("///// Pictures /////");
         if (pictureFilesCountedDownload <= 0 && picturesFilesCountedDesktop <= 0) {
-            System.out.println("No movable pictures were found in " + desktop + " nor in the folder " + downloadFolder + ".");
+            System.out.println("No movable pictures were found in.");
         } else {
             System.out.println(pictureFilesCountedDownload + " pictures got moved from " + downloadFolder);
             System.out.println(picturesFilesCountedDesktop + " pictures got moved from " + desktop);
