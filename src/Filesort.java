@@ -26,7 +26,7 @@ public class Filesort {
         this.pdfAmount = 0;
     }
 
-
+    // Sorts the word files
     public int sortFilesWord() {
         try {
             File folder = new File(fileFolder);
@@ -40,7 +40,6 @@ public class Filesort {
                     wordFileAmount++;
                     System.out.println(fileName + " got successfully moved");
                 }
-
             }
             return wordFileAmount;
 
@@ -50,7 +49,7 @@ public class Filesort {
         }
     }
 
-
+    // Sorts the excel files
     public int sortFilesExcel() {
         try {
             File folder = new File(fileFolder);
@@ -74,7 +73,7 @@ public class Filesort {
         return excelFileAmount;
     }
 
-
+    // Sorts the word files
     public int sortFilesPdfs() {
         try {
             File folder = new File(fileFolder);
@@ -97,7 +96,7 @@ public class Filesort {
         return pdfAmount;
     }
 
-
+    // Sorts the word pictures
     public int sortFilesPictures() {
         try {
             File folder = new File(fileFolder);
@@ -109,18 +108,19 @@ public class Filesort {
                     Path temp = Files.move(Paths.get(currentPath + fileName),
                             Paths.get(destinationPath + fileName));
                     picAmount++;
-                    System.out.println("There was an error while sorting the pictures!");
+                    System.out.println(fileName + " got successfully moved");
+
                 }
             }
 
         } catch (NullPointerException | IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("There was an error while sorting the pictures!");
             return -1;
         }
         return picAmount;
     }
 
-
+    // Sums the found files from the download and the desktop
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
     }

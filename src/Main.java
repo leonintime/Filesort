@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        System.out.println("Moving files...");
         String downloadFolder = System.getenv("Download_folder");
         String desktop = System.getenv("Desktop");
         String wordFiles = System.getenv("Word_files");
@@ -47,7 +47,6 @@ public class Main {
 
         // Files moved from the download folder
         System.out.println("\n");
-        System.out.println("/////Files moved/////\n");
         System.out.println("/////Word files/////");
         if (wordFilesCountedDownload <= 0 && wordFilesCountedDesktop <= 0) {
             System.out.println("No movable word files were found in " + desktop + " nor in the folder " + downloadFolder + ".");
