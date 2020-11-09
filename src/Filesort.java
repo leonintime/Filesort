@@ -26,9 +26,23 @@ public class Filesort {
         this.pdfAmount = 0;
     }
 
+    // Checks if the folders got created on the desktop
+    public void checkFoldersExist() throws IOException {
+
+        if (Files.exists(Paths.get(destinationPath)) || destinationPath == "Download_folder" ||
+                destinationPath == "Desktop") {
+        } else {
+            Files.createDirectory(Paths.get(destinationPath));
+            System.out.println("Folder " + destinationPath + " got created");
+        }
+
+    }
+
+
     // Sorts the word files
     public int sortFilesWord() {
         try {
+            checkFoldersExist();
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
             for (File file : listedFiles) {
@@ -52,6 +66,7 @@ public class Filesort {
     // Sorts the excel files
     public int sortFilesExcel() {
         try {
+            checkFoldersExist();
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
             for (File file : listedFiles) {
@@ -76,6 +91,7 @@ public class Filesort {
     // Sorts the word files
     public int sortFilesPdfs() {
         try {
+            checkFoldersExist();
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
             for (File file : listedFiles) {
@@ -99,6 +115,7 @@ public class Filesort {
     // Sorts the word pictures
     public int sortFilesPictures() {
         try {
+            checkFoldersExist();
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
             for (File file : listedFiles) {
