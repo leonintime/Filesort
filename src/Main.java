@@ -9,6 +9,7 @@ public class Main {
     private final static String excelFiles = System.getenv("Excel_files");
     private final static String pdfFiles = System.getenv("Pdf_files");
     private final static String pictures = System.getenv("Pictures");
+    private final static String powerpoints = System.getenv("Powerpoints");
 
     public static void main(String[] args) {
 
@@ -20,32 +21,35 @@ public class Main {
         Filesort sortExcelFilesDownload = new Filesort(downloadFolder, downloadFolder, excelFiles);
         Filesort sortPdfFilesDownload = new Filesort(downloadFolder, downloadFolder, pdfFiles);
         Filesort sortPicturesDownload = new Filesort(downloadFolder, downloadFolder, pictures);
+        Filesort sortPowerpointsDownload = new Filesort(downloadFolder, downloadFolder, powerpoints);
 
         // Objects for the desktop sorting get created
         Filesort sortWordFilesDesktop = new Filesort(desktop, desktop, wordFiles);
         Filesort sortExcelFilesDesktop = new Filesort(desktop, desktop, excelFiles);
         Filesort sortPdfFilesDesktop = new Filesort(desktop, desktop, pdfFiles);
         Filesort sortPicturesDesktop = new Filesort(desktop, desktop, pictures);
-
+        Filesort sortPowerpointsDesktop = new Filesort(desktop, desktop, powerpoints);
 
         // Files in download folder are getting moved to the destination folder
         int wordFilesCountedDownload = sortWordFilesDownload.sortFilesWord();
         int excelFilesCountedDownload = sortExcelFilesDownload.sortFilesExcel();
         int pdfFilesCountedDownload = sortPdfFilesDownload.sortFilesPdfs();
         int pictureFilesCountedDownload = sortPicturesDownload.sortFilesPictures();
+        int powerpointFilesCountedDownload = sortPowerpointsDownload.sortFilesPowerpoints();
 
         // Files on the desktop folder are getting moved to the destination folder
         int wordFilesCountedDesktop = sortWordFilesDesktop.sortFilesWord();
         int excelFilesCountedDesktop = sortExcelFilesDesktop.sortFilesExcel();
         int pdfFilesCountedDesktop = sortPdfFilesDesktop.sortFilesPdfs();
         int picturesFilesCountedDesktop = sortPicturesDesktop.sortFilesPictures();
+        int powerpointsFilesCountedDesktop = sortPicturesDesktop.sortFilesPowerpoints();
 
         // Desktop and download files are added together to calculate the total amount
         int totalWordFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop);
         int totalExcelFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(excelFilesCountedDownload, excelFilesCountedDesktop);
         int totalPdfFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(pdfFilesCountedDownload, pdfFilesCountedDesktop);
         int totalPictureFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(pictureFilesCountedDownload, picturesFilesCountedDesktop);
-
+        int totalPowerpointFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(powerpointFilesCountedDownload, powerpointsFilesCountedDesktop);
 
         // Files moved from the download folder
         System.out.println("\n");
@@ -74,13 +78,24 @@ public class Main {
             System.out.println(pdfFilesCountedDesktop + " pdf files got moved from " + desktop);
             System.out.println("Total pdf files that got moved: " + totalPdfFilesMoved + " \n");
         }
+
+
+        System.out.println("///// Powerpoints /////");
+        if (powerpointFilesCountedDownload <= 0 && powerpointsFilesCountedDesktop <= 0) {
+            System.out.println("No movable powerpoints were found.");
+        } else {
+            System.out.println(powerpointFilesCountedDownload + " pictures got moved from " + downloadFolder);
+            System.out.println(powerpointsFilesCountedDesktop + " pictures got moved from " + desktop);
+            System.out.println("Total powerpoint files that got moved: " + totalPowerpointFilesMoved);
+        }
+
         System.out.println("///// Pictures /////");
         if (pictureFilesCountedDownload <= 0 && picturesFilesCountedDesktop <= 0) {
             System.out.println("No movable pictures were found.");
         } else {
             System.out.println(pictureFilesCountedDownload + " pictures got moved from " + downloadFolder);
             System.out.println(picturesFilesCountedDesktop + " pictures got moved from " + desktop);
-            System.out.println("Total pdf files that got moved: " + totalPictureFilesMoved);
+            System.out.println("Total picture files that got moved: " + totalPictureFilesMoved);
         }
 
 

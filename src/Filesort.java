@@ -10,6 +10,7 @@ public class Filesort {
     private int wordFileAmount;
     private int excelFileAmount;
     private int pdfAmount;
+    private int powerpointAmount;
 
     private String fileFolder;
     private String currentPath;
@@ -135,6 +136,32 @@ public class Filesort {
             return -1;
         }
         return picAmount;
+    }
+
+
+    // Sorts the powerpoint files
+    public int sortFilesPowerpoints() {
+        try {
+            checkFoldersExist();
+            File folder = new File(fileFolder);
+            File[] listedFiles = folder.listFiles();
+            for (File file : listedFiles) {
+                String fileName = file.getName();
+
+                if (fileName.contains(".pptx")) {
+                    Path temp = Files.move(Paths.get(currentPath + fileName),
+                            Paths.get(destinationPath + fileName));
+                    powerpointAmount++;
+                    System.out.println(fileName + " got successfully moved");
+
+                }
+            }
+
+        } catch (NullPointerException | IOException ex) {
+            System.out.println("There was an error while sorting the powerpoints!");
+            return -1;
+        }
+        return powerpointAmount;
     }
 
     // Sums the found files from the download and the desktop
