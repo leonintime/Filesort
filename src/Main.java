@@ -53,13 +53,14 @@ public class Main {
 
         // Files moved from the download folder
         System.out.println("\n");
+
         System.out.println("/////Word files/////");
         if (wordFilesCountedDownload <= 0 && wordFilesCountedDesktop <= 0) {
             System.out.println("No movable word files were found.\n");
         } else {
             System.out.println(wordFilesCountedDownload + " word files got moved from " + downloadFolder);
             System.out.println(wordFilesCountedDesktop + " word files got moved from " + desktop);
-            System.out.println("Total word files that got moved: " + totalWordFilesMoved + "\n");
+            System.out.println("Total word files moved: " + totalWordFilesMoved + "\n");
         }
         System.out.println("/////Excel files/////");
         if (excelFilesCountedDownload <= 0 && excelFilesCountedDesktop <= 0) {
@@ -67,7 +68,7 @@ public class Main {
         } else {
             System.out.println(excelFilesCountedDownload + " excel files got moved from " + downloadFolder);
             System.out.println(excelFilesCountedDesktop + " excel files got moved from " + desktop);
-            System.out.println("Total excel files that got moved: " + totalExcelFilesMoved + "\n");
+            System.out.println("Total excel files moved: " + totalExcelFilesMoved + "\n");
         }
 
         System.out.println("/////Pdf files/////");
@@ -76,7 +77,7 @@ public class Main {
         } else {
             System.out.println(pdfFilesCountedDownload + " pdf files got moved from " + downloadFolder);
             System.out.println(pdfFilesCountedDesktop + " pdf files got moved from " + desktop);
-            System.out.println("Total pdf files that got moved: " + totalPdfFilesMoved + " \n");
+            System.out.println("Total pdf files moved: " + totalPdfFilesMoved + " \n");
         }
 
 
@@ -86,7 +87,7 @@ public class Main {
         } else {
             System.out.println(powerpointFilesCountedDownload + " powerpoints got moved from " + downloadFolder);
             System.out.println(powerpointsFilesCountedDesktop + " powerpoints got moved from " + desktop);
-            System.out.println("Total powerpoint files that got moved: " + totalPowerpointFilesMoved + " \n");
+            System.out.println("Total powerpoint files moved: " + totalPowerpointFilesMoved + " \n");
         }
 
         System.out.println("///// Pictures /////");
@@ -95,7 +96,7 @@ public class Main {
         } else {
             System.out.println(pictureFilesCountedDownload + " pictures got moved from " + downloadFolder);
             System.out.println(picturesFilesCountedDesktop + " pictures got moved from " + desktop);
-            System.out.println("Total picture files that got moved: " + totalPictureFilesMoved);
+            System.out.println("Total picture files moved: " + totalPictureFilesMoved);
         }
 
 
