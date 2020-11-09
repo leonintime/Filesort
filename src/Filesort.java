@@ -32,6 +32,7 @@ public class Filesort {
 
         if (Files.exists(Paths.get(destinationPath)) || destinationPath == "Download_folder" ||
                 destinationPath == "Desktop") {
+
         } else {
             Files.createDirectory(Paths.get(destinationPath));
             System.out.println("Folder " + destinationPath + " got created");
