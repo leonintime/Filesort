@@ -82,7 +82,7 @@ public class Main {
 
         System.out.println("///// Powerpoints /////");
         if (powerpointFilesCountedDownload <= 0 && powerpointsFilesCountedDesktop <= 0) {
-            System.out.println("No movable powerpoints were found.");
+            System.out.println("No movable powerpoints were found.\n");
         } else {
             System.out.println(powerpointFilesCountedDownload + " powerpoints got moved from " + downloadFolder);
             System.out.println(powerpointsFilesCountedDesktop + " powerpoints got moved from " + desktop);
