@@ -6,25 +6,19 @@ import java.nio.file.Paths;
 
 public class Filesort {
 
-    private int picAmount;
-    private int wordFileAmount;
-    private int excelFileAmount;
-    private int pdfAmount;
-    private int powerpointAmount;
-
+    private String[] extension;
+    private int fileAmount;
     private String fileFolder;
     private String currentPath;
     private String destinationPath;
 
 
-    public Filesort(String fileFolder, String currentPath, String destinationPath) {
+    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
         this.fileFolder = fileFolder;
         this.currentPath = currentPath;
         this.destinationPath = destinationPath;
-        this.picAmount = 0;
-        this.wordFileAmount = 0;
-        this.excelFileAmount = 0;
-        this.pdfAmount = 0;
+        this.extension = extension;
+        this.fileAmount = 0;
     }
 
     // Checks if the folders got created on the desktop
@@ -41,128 +35,29 @@ public class Filesort {
     }
 
 
-    // Sorts the word files
-    public int sortFilesWord() {
+    // Sorts the files
+    public int sortFiles() {
         try {
             checkFoldersExist();
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
             for (File file : listedFiles) {
                 String fileName = file.getName();
-                // Word Dokumente werden sortiert
-                if (fileName.contains(".docx")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    wordFileAmount++;
-                    System.out.println(fileName + " got successfully moved");
+                for (int i = 0; i <= extension.length - 1; i++) {
+                    if (fileName.contains(extension[i])) {
+                        Path temp = Files.move(Paths.get(currentPath + fileName),
+                                Paths.get(destinationPath + fileName));
+                        fileAmount++;
+                        System.out.println(fileName + " got successfully moved");
+                    }
                 }
             }
-            return wordFileAmount;
+            return fileAmount;
 
         } catch (NullPointerException | IOException ex) {
-            System.out.println("There was an error while sorting the word files!");
+            System.out.println("There was an error while sorting the files!");
             return -1;
         }
-    }
-
-    // Sorts the excel files
-    public int sortFilesExcel() {
-        try {
-            checkFoldersExist();
-            File folder = new File(fileFolder);
-            File[] listedFiles = folder.listFiles();
-            for (File file : listedFiles) {
-                String fileName = file.getName();
-
-                // Excel Dateien werden sortiert
-                if (fileName.contains(".xlsx")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    excelFileAmount++;
-                    System.out.println(fileName + " got successfully moved");
-                }
-            }
-
-        } catch (NullPointerException | IOException ex) {
-            System.out.println("There was an error while sorting the excel files!");
-            return -1;
-        }
-        return excelFileAmount;
-    }
-
-    // Sorts the word files
-    public int sortFilesPdfs() {
-        try {
-            checkFoldersExist();
-            File folder = new File(fileFolder);
-            File[] listedFiles = folder.listFiles();
-            for (File file : listedFiles) {
-                String fileName = file.getName();
-
-                if (fileName.contains(".pdf")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    pdfAmount++;
-                    System.out.println(fileName + " got successfully moved");
-                }
-            }
-
-        } catch (NullPointerException | IOException ex) {
-            System.out.println("There was an error while sorting the pdf files!");
-            return -1;
-        }
-        return pdfAmount;
-    }
-
-    // Sorts the word pictures
-    public int sortFilesPictures() {
-        try {
-            checkFoldersExist();
-            File folder = new File(fileFolder);
-            File[] listedFiles = folder.listFiles();
-            for (File file : listedFiles) {
-                String fileName = file.getName();
-
-                if (fileName.contains(".jpg") || fileName.contains(".jpeg") || fileName.contains(".gif") || fileName.contains(".png")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    picAmount++;
-                    System.out.println(fileName + " got successfully moved");
-
-                }
-            }
-
-        } catch (NullPointerException | IOException ex) {
-            System.out.println("There was an error while sorting the pictures!");
-            return -1;
-        }
-        return picAmount;
-    }
-
-
-    // Sorts the powerpoint files
-    public int sortFilesPowerpoints() {
-        try {
-            checkFoldersExist();
-            File folder = new File(fileFolder);
-            File[] listedFiles = folder.listFiles();
-            for (File file : listedFiles) {
-                String fileName = file.getName();
-
-                if (fileName.contains(".pptx")) {
-                    Path temp = Files.move(Paths.get(currentPath + fileName),
-                            Paths.get(destinationPath + fileName));
-                    powerpointAmount++;
-                    System.out.println(fileName + " got successfully moved");
-
-                }
-            }
-
-        } catch (NullPointerException | IOException ex) {
-            System.out.println("There was an error while sorting the powerpoints!");
-            return -1;
-        }
-        return powerpointAmount;
     }
 
     // Sums the found files from the download and the desktop

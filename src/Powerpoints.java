@@ -1,10 +1,10 @@
-//import java.io.File;
+//public class Powerpoints  extends Filesort{
 //
-//public class Pictures extends Filesort {
 //
-//    public Pictures(String fileFolder, String currentPath, String destinationPath, String[] extension) {
+//    public Powerpoints(String fileFolder, String currentPath, String destinationPath, String[] extension) {
 //        super(fileFolder, currentPath, destinationPath, extension);
 //    }
+//
 //
 //    @Override
 //    public int sortFiles() {

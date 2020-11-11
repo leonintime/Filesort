@@ -1,6 +1,3 @@
-
-import java.io.IOException;
-
 public class Main {
 
     private final static String downloadFolder = System.getenv("Download_folder");
@@ -8,41 +5,61 @@ public class Main {
     private final static String wordFiles = System.getenv("Word_files");
     private final static String excelFiles = System.getenv("Excel_files");
     private final static String pdfFiles = System.getenv("Pdf_files");
-    private final static String pictures = System.getenv("Pictures");
-    private final static String powerpoints = System.getenv("Powerpoints");
+    private final static String pictureFiles = System.getenv("Pictures");
+    private final static String powerpointFiles = System.getenv("Powerpoints");
+    private static String[] wordExtensions = new String[]{".docx", ".dotx", "docm"};
+    private static String[] excelExtensions = new String[]{".xlsx"};
+    private static String[] pdfExtensions = new String[]{".pdf"};
+    private static String[] powerpointExtensions = new String[]{".pptx"};
+    private static String[] pictureExtensions = new String[]{".jpg", ".jpeg", ".gif", ".png"};
+
 
     public static void main(String[] args) {
 
         System.out.println("Moving files...");
 
-
         // Objects for the download sorting get created
-        Filesort sortWordFilesDownload = new Filesort(downloadFolder, downloadFolder, wordFiles);
-        Filesort sortExcelFilesDownload = new Filesort(downloadFolder, downloadFolder, excelFiles);
-        Filesort sortPdfFilesDownload = new Filesort(downloadFolder, downloadFolder, pdfFiles);
-        Filesort sortPicturesDownload = new Filesort(downloadFolder, downloadFolder, pictures);
-        Filesort sortPowerpointsDownload = new Filesort(downloadFolder, downloadFolder, powerpoints);
+        Filesort sortWordFilesDownload = new Filesort(downloadFolder, downloadFolder, wordFiles, wordExtensions);
+        Filesort sortExcelFilesDownload = new Filesort(downloadFolder, downloadFolder, excelFiles, excelExtensions);
+        Filesort sortPdfFilesDownload = new Filesort(downloadFolder, downloadFolder, pdfFiles, pdfExtensions);
+        Filesort sortPicturesDownload = new Filesort(downloadFolder, downloadFolder, pictureFiles, pictureExtensions);
+        Filesort sortPowerpointsDownload = new Filesort(downloadFolder, downloadFolder, powerpointFiles, powerpointExtensions);
 
         // Objects for the desktop sorting get created
-        Filesort sortWordFilesDesktop = new Filesort(desktop, desktop, wordFiles);
-        Filesort sortExcelFilesDesktop = new Filesort(desktop, desktop, excelFiles);
-        Filesort sortPdfFilesDesktop = new Filesort(desktop, desktop, pdfFiles);
-        Filesort sortPicturesDesktop = new Filesort(desktop, desktop, pictures);
-        Filesort sortPowerpointsDesktop = new Filesort(desktop, desktop, powerpoints);
+        Filesort sortWordFilesDesktop = new Filesort(desktop, desktop, wordFiles, wordExtensions);
+        Filesort sortExcelFilesDesktop = new Filesort(desktop, desktop, excelFiles, excelExtensions);
+        Filesort sortPdfFilesDesktop = new Filesort(desktop, desktop, pdfFiles, pdfExtensions);
+        Filesort sortPicturesDesktop = new Filesort(desktop, desktop, pictureFiles, pictureExtensions);
+        Filesort sortPowerpointsDesktop = new Filesort(desktop, desktop, powerpointFiles, powerpointExtensions);
+
+        // Will be needed if classes need to inheritate things from filesort (not needed yet)
+//        Word sortWordFilesDownload = new Word(downloadFolder, downloadFolder, wordFiles, wordExtensions);
+//        Excel sortExcelFilesDownload = new Excel(downloadFolder, downloadFolder, excelFiles, excelExtensions);
+//        Pdf sortPdfFilesDownload = new Pdf(downloadFolder, downloadFolder, pdfFiles, pdfExtensions);
+//        Pictures sortPicturesDownload = new Pictures(downloadFolder, downloadFolder, pdfFiles, pdfExtensions);
+//        Powerpoints sortPowerpointsDownload = new Powerpoints(downloadFolder, downloadFolder, powerpointFiles, powerpointExtensions);
+//
+//
+//        Word sortWordFilesDesktop = new Word(desktop, desktop, wordFiles, wordExtensions);
+//        Excel sortExcelFilesDesktop = new Excel(desktop, desktop, excelFiles, excelExtensions);
+//        Pdf sortPdfFilesDesktop = new Pdf(desktop, desktop, pdfFiles, pdfExtensions);
+//        Pictures sortPicturesDesktop = new Pictures(desktop, desktop, pictureFiles, pictureExtensions);
+//        Powerpoints sortPowerpointsDesktop = new Powerpoints(desktop, desktop, powerpointFiles, powerpointExtensions);
+
 
         // Files in download folder are getting moved to the destination folder
-        int wordFilesCountedDownload = sortWordFilesDownload.sortFilesWord();
-        int excelFilesCountedDownload = sortExcelFilesDownload.sortFilesExcel();
-        int pdfFilesCountedDownload = sortPdfFilesDownload.sortFilesPdfs();
-        int pictureFilesCountedDownload = sortPicturesDownload.sortFilesPictures();
-        int powerpointFilesCountedDownload = sortPowerpointsDownload.sortFilesPowerpoints();
+        int wordFilesCountedDownload = sortWordFilesDownload.sortFiles();
+        int excelFilesCountedDownload = sortExcelFilesDownload.sortFiles();
+        int pdfFilesCountedDownload = sortPdfFilesDownload.sortFiles();
+        int pictureFilesCountedDownload = sortPicturesDownload.sortFiles();
+        int powerpointFilesCountedDownload = sortPowerpointsDownload.sortFiles();
 
         // Files on the desktop folder are getting moved to the destination folder
-        int wordFilesCountedDesktop = sortWordFilesDesktop.sortFilesWord();
-        int excelFilesCountedDesktop = sortExcelFilesDesktop.sortFilesExcel();
-        int pdfFilesCountedDesktop = sortPdfFilesDesktop.sortFilesPdfs();
-        int picturesFilesCountedDesktop = sortPicturesDesktop.sortFilesPictures();
-        int powerpointsFilesCountedDesktop = sortPowerpointsDesktop.sortFilesPowerpoints();
+        int wordFilesCountedDesktop = sortWordFilesDesktop.sortFiles();
+        int excelFilesCountedDesktop = sortExcelFilesDesktop.sortFiles();
+        int pdfFilesCountedDesktop = sortPdfFilesDesktop.sortFiles();
+        int picturesFilesCountedDesktop = sortPicturesDesktop.sortFiles();
+        int powerpointsFilesCountedDesktop = sortPowerpointsDesktop.sortFiles();
 
         // Desktop and download files are added together to calculate the total amount
         int totalWordFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop);
