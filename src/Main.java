@@ -1,3 +1,5 @@
+import java.nio.file.Files;
+
 public class Main {
 
     private final static String downloadFolder = System.getenv("Download_folder");
@@ -7,15 +9,15 @@ public class Main {
     private final static String pdfFiles = System.getenv("Pdf_files");
     private final static String pictureFiles = System.getenv("Pictures");
     private final static String powerpointFiles = System.getenv("Powerpoints");
-    private static String[] wordExtensions = new String[]{".docx", ".dotx", "docm"};
-    private static String[] excelExtensions = new String[]{".xlsx"};
-    private static String[] pdfExtensions = new String[]{".pdf"};
-    private static String[] powerpointExtensions = new String[]{".pptx"};
-    private static String[] pictureExtensions = new String[]{".jpg", ".jpeg", ".gif", ".png"};
+    private static final String[] wordExtensions = new String[]{".docx", ".dotx", "docm"};
+    private static final String[] excelExtensions = new String[]{".xlsx"};
+    private static final String[] pdfExtensions = new String[]{".pdf"};
+    private static final String[] powerpointExtensions = new String[]{".pptx"};
+    private static final String[] pictureExtensions = new String[]{".jpg", ".jpeg", ".gif", ".png", ".PNG"};
 
 
     public static void main(String[] args) {
-
+  
         System.out.println("Moving files...");
 
         // Objects for the download sorting get created
@@ -115,7 +117,6 @@ public class Main {
             System.out.println(picturesFilesCountedDesktop + " pictures got moved from " + desktop);
             System.out.println("Total picture files moved: " + totalPictureFilesMoved);
         }
-
 
     }
 

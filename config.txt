@@ -1,0 +1,3 @@
+Word_files=C:\Users\leond\Desktop\Word_Dokumente\
+Excel_files=C:\Users\leond\Desktop\Excel_Dokumente\
+Powerpoints=C:\Users\leond\Desktop\Word_Dokumente\

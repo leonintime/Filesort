@@ -35,6 +35,17 @@ public class Filesort {
     }
 
 
+    public void checkEnvironmentVariables() {
+
+        if (destinationPath == null || currentPath == null || fileFolder == null) {
+
+            if (destinationPath == null) {
+
+            }
+        }
+    }
+
+
     // Sorts the files
     public int sortFiles() {
         try {
