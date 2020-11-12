@@ -26,6 +26,7 @@ public class Filesort {
 
         if (Files.exists(Paths.get(destinationPath)) || destinationPath == "Download_folder" ||
                 destinationPath == "Desktop") {
+            // Nothing
 
         } else {
             Files.createDirectory(Paths.get(destinationPath));
@@ -35,12 +36,16 @@ public class Filesort {
     }
 
 
-    public void checkEnvironmentVariables() {
+    private void checkEnvironmentVariables() {
 
-        if (destinationPath == null || currentPath == null || fileFolder == null) {
+        if (destinationPath == null || currentPath == null) {
 
             if (destinationPath == null) {
-
+                System.out.println("The path for the destined folder needs to be set.");
+            } else if (currentPath == null) {
+                System.out.println("The path from the folder where the files are supposed to be moved away needs to be set.");
+            } else {
+                        // Nothing
             }
         }
     }
@@ -49,6 +54,7 @@ public class Filesort {
     // Sorts the files
     public int sortFiles() {
         try {
+            checkEnvironmentVariables();
             checkFoldersExist();
             File folder = new File(fileFolder);
             File[] listedFiles = folder.listFiles();
