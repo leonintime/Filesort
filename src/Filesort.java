@@ -6,11 +6,11 @@ import java.nio.file.Paths;
 
 public class Filesort {
 
-    private String[] extension;
+    private final String[] extension;
     private int fileAmount;
-    private String fileFolder;
-    private String currentPath;
-    private String destinationPath;
+    private final String fileFolder;
+    private final String currentPath;
+    private final String destinationPath;
 
 
     public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
@@ -24,8 +24,8 @@ public class Filesort {
     // Checks if the folders got created on the desktop
     public void checkFoldersExist() throws IOException {
 
-        if (Files.exists(Paths.get(destinationPath)) || destinationPath == "Download_folder" ||
-                destinationPath == "Desktop") {
+        if (Files.exists(Paths.get(destinationPath)) || destinationPath.equals("Download_folder") ||
+                destinationPath.equals("Desktop")) {
             // Nothing
 
         } else {
@@ -45,7 +45,7 @@ public class Filesort {
             } else if (currentPath == null) {
                 System.out.println("The path from the folder where the files are supposed to be moved away needs to be set.");
             } else {
-                        // Nothing
+                // Nothing
             }
         }
     }
