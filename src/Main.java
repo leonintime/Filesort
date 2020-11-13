@@ -34,20 +34,6 @@ public class Main {
         Filesort sortPicturesDesktop = new Filesort(desktop, desktop, pictureFiles, pictureExtensions);
         Filesort sortPowerpointsDesktop = new Filesort(desktop, desktop, powerpointFiles, powerpointExtensions);
 
-        // Will be needed if classes need to inheritate things from filesort (not needed yet)
-//        Word sortWordFilesDownload = new Word(downloadFolder, downloadFolder, wordFiles, wordExtensions);
-//        Excel sortExcelFilesDownload = new Excel(downloadFolder, downloadFolder, excelFiles, excelExtensions);
-//        Pdf sortPdfFilesDownload = new Pdf(downloadFolder, downloadFolder, pdfFiles, pdfExtensions);
-//        Pictures sortPicturesDownload = new Pictures(downloadFolder, downloadFolder, pdfFiles, pdfExtensions);
-//        Powerpoints sortPowerpointsDownload = new Powerpoints(downloadFolder, downloadFolder, powerpointFiles, powerpointExtensions);
-//
-//
-//        Word sortWordFilesDesktop = new Word(desktop, desktop, wordFiles, wordExtensions);
-//        Excel sortExcelFilesDesktop = new Excel(desktop, desktop, excelFiles, excelExtensions);
-//        Pdf sortPdfFilesDesktop = new Pdf(desktop, desktop, pdfFiles, pdfExtensions);
-//        Pictures sortPicturesDesktop = new Pictures(desktop, desktop, pictureFiles, pictureExtensions);
-//        Powerpoints sortPowerpointsDesktop = new Powerpoints(desktop, desktop, powerpointFiles, powerpointExtensions);
-
 
         // Files in download folder are getting moved to the destination folder
         int wordFilesCountedDownload = sortWordFilesDownload.sortFiles();
