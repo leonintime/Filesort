@@ -91,39 +91,7 @@ public class Filesort {
         return filesDesktop + filesDownload;
     }
 
-    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType) {
 
-        switch (fileType) {
-
-            case "word":
-                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
-                    System.out.println("No movable pictures were found.");
-                } else {
-//                    System.out.println(filesCountedDownload + " pictures got moved from ");
-//                    System.out.println(filesCountedDesktop + " pictures got moved from " + desktop);
-//                    System.out.println("Total picture files moved: " + totalPictureFilesMoved);
-                }
-                break;
-
-            case "excel":
-                break;
-
-
-            case "pdf":
-                break;
-
-
-            case "pictures":
-                break;
-
-
-            case "powerpoints":
-                break;
-
-        }
-
-
-    }
 
 
 }
