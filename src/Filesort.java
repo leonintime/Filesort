@@ -23,31 +23,40 @@ public class Filesort {
 
     // Checks if the folders got created on the desktop
     public void checkFoldersExist() throws IOException {
+        try {
+            if (Files.exists(Paths.get(destinationPath)) || destinationPath.equals("Download_folder") ||
+                    destinationPath.equals("Desktop")) {
+                // Nothing
 
-        if (Files.exists(Paths.get(destinationPath)) || destinationPath.equals("Download_folder") ||
-                destinationPath.equals("Desktop")) {
-            // Nothing
-
-        } else {
-            Files.createDirectory(Paths.get(destinationPath));
-            System.out.println("Folder " + destinationPath + " got created");
+            } else {
+                Files.createDirectory(Paths.get(destinationPath));
+                System.out.println("Folder " + destinationPath + " got created");
+            }
+        } catch (Exception ex) {
+            System.out.println("An error occurred while checking if the file folders exist.");
         }
+
 
     }
 
 
     private void checkEnvironmentVariables() {
 
-        if (destinationPath == null || currentPath == null) {
+        try {
+            if (destinationPath == null || currentPath == null) {
 
-            if (destinationPath == null) {
-                System.out.println("The path for the destined folder needs to be set.");
-            } else if (currentPath == null) {
-                System.out.println("The path from the folder where the files are supposed to be moved away needs to be set.");
-            } else {
-                // Nothing
+                if (destinationPath == null) {
+                    System.out.println("The path for the destined folder needs to be set.");
+                } else if (currentPath == null) {
+                    System.out.println("The path from the folder where the files are supposed to be moved away needs to be set.");
+                } else {
+                    // Nothing
+                }
             }
+        } catch (Exception ex) {
+            System.out.println("An error occurred while checking if the environment variables exist.");
         }
+
     }
 
 
@@ -80,6 +89,41 @@ public class Filesort {
     // Sums the found files from the download and the desktop
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
+    }
+
+    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType) {
+
+        switch (fileType) {
+
+            case "word":
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable pictures were found.");
+                } else {
+//                    System.out.println(filesCountedDownload + " pictures got moved from " + currentPath);
+//                    System.out.println(filesCountedDesktop + " pictures got moved from " + desktop);
+//                    System.out.println("Total picture files moved: " + totalPictureFilesMoved);
+                }
+                break;
+
+            case "excel":
+                break;
+
+
+            case "pdf":
+                break;
+
+
+            case "pictures":
+                break;
+
+
+            case "powerpoints":
+                break;
+
+        }
+
+
+
     }
 
 
