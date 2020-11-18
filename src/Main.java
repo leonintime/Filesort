@@ -1,36 +1,38 @@
+import java.io.IOException;
+
 public class Main {
 
-    private final static String downloadFolder = System.getenv("Download_folder");
-    private final static String desktop = System.getenv("Desktop");
+    private final static String moveFolderOne = System.getenv("MoveFolder1");
+    private final static String moveFolderTwo = System.getenv("MoveFolder2");
     private final static String wordFiles = System.getenv("Word_files");
     private final static String excelFiles = System.getenv("Excel_files");
     private final static String pdfFiles = System.getenv("Pdf_files");
     private final static String pictureFiles = System.getenv("Pictures");
     private final static String powerpointFiles = System.getenv("Powerpoints");
-    private static final String[] wordExtensions = new String[]{".docx", ".dotx", "docm"};
-    private static final String[] excelExtensions = new String[]{".xlsx"};
+    private static final String[] wordExtensions = new String[]{".docx", ".dotx", "docm", ".dotm", ".docb"};
+    private static final String[] excelExtensions = new String[]{".xlsx", ".xlsm", ".xltx", ".xltm "};
     private static final String[] pdfExtensions = new String[]{".pdf"};
     private static final String[] powerpointExtensions = new String[]{".pptx"};
     private static final String[] pictureExtensions = new String[]{".jpg", ".jpeg", ".gif", ".png", ".PNG"};
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         System.out.println("Moving files...");
 
         // Objects for the download sorting get created
-        Filesort sortWordFilesDownload = new Filesort(downloadFolder, downloadFolder, wordFiles, wordExtensions);
-        Filesort sortExcelFilesDownload = new Filesort(downloadFolder, downloadFolder, excelFiles, excelExtensions);
-        Filesort sortPdfFilesDownload = new Filesort(downloadFolder, downloadFolder, pdfFiles, pdfExtensions);
-        Filesort sortPicturesDownload = new Filesort(downloadFolder, downloadFolder, pictureFiles, pictureExtensions);
-        Filesort sortPowerpointsDownload = new Filesort(downloadFolder, downloadFolder, powerpointFiles, powerpointExtensions);
+        Filesort sortWordFilesDownload = new Filesort(moveFolderOne, moveFolderOne, wordFiles, wordExtensions);
+        Filesort sortExcelFilesDownload = new Filesort(moveFolderOne, moveFolderOne, excelFiles, excelExtensions);
+        Filesort sortPdfFilesDownload = new Filesort(moveFolderOne, moveFolderOne, pdfFiles, pdfExtensions);
+        Filesort sortPicturesDownload = new Filesort(moveFolderOne, moveFolderOne, pictureFiles, pictureExtensions);
+        Filesort sortPowerpointsDownload = new Filesort(moveFolderOne, moveFolderOne, powerpointFiles, powerpointExtensions);
 
         // Objects for the desktop sorting get created
-        Filesort sortWordFilesDesktop = new Filesort(desktop, desktop, wordFiles, wordExtensions);
-        Filesort sortExcelFilesDesktop = new Filesort(desktop, desktop, excelFiles, excelExtensions);
-        Filesort sortPdfFilesDesktop = new Filesort(desktop, desktop, pdfFiles, pdfExtensions);
-        Filesort sortPicturesDesktop = new Filesort(desktop, desktop, pictureFiles, pictureExtensions);
-        Filesort sortPowerpointsDesktop = new Filesort(desktop, desktop, powerpointFiles, powerpointExtensions);
+        Filesort sortWordFilesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, wordFiles, wordExtensions);
+        Filesort sortExcelFilesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, excelFiles, excelExtensions);
+        Filesort sortPdfFilesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, pdfFiles, pdfExtensions);
+        Filesort sortPicturesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, pictureFiles, pictureExtensions);
+        Filesort sortPowerpointsDesktop = new Filesort(moveFolderTwo, moveFolderTwo, powerpointFiles, powerpointExtensions);
 
 
         // Files in download folder are getting moved to the destination folder
