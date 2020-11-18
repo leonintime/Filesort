@@ -60,7 +60,6 @@ public class Filesort {
     }
 
 
-    // Sorts the files
     public int sortFiles() {
         try {
             checkEnvironmentVariables();
@@ -91,7 +90,73 @@ public class Filesort {
         return filesDesktop + filesDownload;
     }
 
+    //
+    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType, int totalFilesMoved) {
 
+        switch (fileType) {
+
+            case "word":
+                System.out.println("/// WORD FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable word file/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " word file/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  word file/s got moved to " + destinationPath);
+                    System.out.println("Total word file/s moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+            case "excel":
+                System.out.println("/// EXCEL FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable excel file/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " excel file/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  excel file/s got moved to " + destinationPath);
+                    System.out.println("Total  excel file/s moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+
+            case "pdf":
+                System.out.println("/// PDF FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable pdf file/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " pdf file/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  pdf file/s got moved to " + destinationPath);
+                    System.out.println("Total pdf files moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+
+            case "pictures":
+                System.out.println("/// PICTURES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable picture/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " picture/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  picture/s got moved to " + destinationPath);
+                    System.out.println("Total picture/s moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+
+            case "powerpoints":
+                System.out.println("/// POWERPOINT FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable picture/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " picture/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  picture/s got moved to " + destinationPath);
+                    System.out.println("Total picture/s moved: " + totalFilesMoved);
+                }
+                break;
+
+        }
+
+
+    }
 
 
 }
