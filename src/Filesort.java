@@ -22,10 +22,9 @@ public class Filesort {
     }
 
     // Checks if the folders got created on the desktop
-    public void checkFoldersExist() throws IOException {
+    public void checkFoldersExist() {
         try {
-            if (Files.exists(Paths.get(destinationPath)) || destinationPath.equals("Download_folder") ||
-                    destinationPath.equals("Desktop")) {
+            if (Files.exists(Paths.get(destinationPath))) {
                 // Nothing
 
             } else {
@@ -46,9 +45,12 @@ public class Filesort {
             if (destinationPath == null || currentPath == null) {
 
                 if (destinationPath == null) {
-                    System.out.println("The path for the destined folder needs to be set.");
+                    System.out.println("The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) " +
+                            "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
+
                 } else if (currentPath == null) {
-                    System.out.println("The path from the folder where the files are supposed to be moved away needs to be set.");
+                    System.out.println("The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.." +
+                            "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
                 } else {
                     // Nothing
                 }
@@ -65,12 +67,12 @@ public class Filesort {
             checkEnvironmentVariables();
             checkFoldersExist();
             File folder = new File(fileFolder);
-            File[] listedFiles = folder.listFiles();
-            for (File file : listedFiles) {
-                String fileName = file.getName();
+            String[] files = folder.list();
+            for (String file : files) {
+                String fileName = file;
                 for (int i = 0; i <= extension.length - 1; i++) {
                     if (fileName.contains(extension[i])) {
-                        Path temp = Files.move(Paths.get(currentPath + fileName),
+                        Files.move(Paths.get(currentPath + fileName),
                                 Paths.get(destinationPath + fileName));
                         fileAmount++;
                         System.out.println(fileName + " got successfully moved");
