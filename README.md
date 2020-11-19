@@ -3,7 +3,6 @@ A program that helps you to manage your desktop and download folder.
 
 ENVIRONMENT VARIABLES YOU NEED TO SET in C:\Windows\System32\SystemPropertiesAdvanced
 
-For example: 
 
 MoveFolder1 = C:\Users\YourAccount\Desktop\
 
@@ -18,3 +17,5 @@ Excel_files = Your excel folder
 Pdf_files = Your pdf folder 
 
 Pictures = Your picture folder 
+
+
