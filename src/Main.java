@@ -1,5 +1,3 @@
-import java.nio.file.Files;
-
 public class Main {
 
     private final static String downloadFolder = System.getenv("Download_folder");
@@ -56,53 +54,15 @@ public class Main {
         int totalPictureFilesMoved = sortPicturesDownload.calcTotalFilesMoved(pictureFilesCountedDownload, picturesFilesCountedDesktop);
         int totalPowerpointFilesMoved = sortPowerpointsDownload.calcTotalFilesMoved(powerpointFilesCountedDownload, powerpointsFilesCountedDesktop);
 
-        // Files moved from the download folder
         System.out.println("\n");
 
-        System.out.println("/////Word files/////");
-        if (wordFilesCountedDownload <= 0 && wordFilesCountedDesktop <= 0) {
-            System.out.println("No movable word files were found.\n");
-        } else {
-            System.out.println(wordFilesCountedDownload + " word files got moved from " + downloadFolder);
-            System.out.println(wordFilesCountedDesktop + " word files got moved from " + desktop);
-            System.out.println("Total word files moved: " + totalWordFilesMoved + "\n");
-        }
-        System.out.println("/////Excel files/////");
-        if (excelFilesCountedDownload <= 0 && excelFilesCountedDesktop <= 0) {
-            System.out.println("No movable excel files were found.\n");
-        } else {
-            System.out.println(excelFilesCountedDownload + " excel files got moved from " + downloadFolder);
-            System.out.println(excelFilesCountedDesktop + " excel files got moved from " + desktop);
-            System.out.println("Total excel files moved: " + totalExcelFilesMoved + "\n");
-        }
+        // Checks how many files got moved from each folder
+        sortWordFilesDesktop.checkFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop, "word", totalWordFilesMoved);
+        sortExcelFilesDesktop.checkFilesMoved(excelFilesCountedDownload, excelFilesCountedDesktop, "excel", totalExcelFilesMoved);
+        sortPdfFilesDesktop.checkFilesMoved(pdfFilesCountedDownload, pdfFilesCountedDesktop, "pdf", totalPdfFilesMoved);
+        sortPicturesDesktop.checkFilesMoved(pictureFilesCountedDownload, picturesFilesCountedDesktop, "pictures", totalPictureFilesMoved);
+        sortPowerpointsDesktop.checkFilesMoved(powerpointFilesCountedDownload, powerpointsFilesCountedDesktop, "powerpoints", totalPowerpointFilesMoved);
 
-        System.out.println("/////Pdf files/////");
-        if (pdfFilesCountedDownload <= 0 && pdfFilesCountedDesktop <= 0) {
-            System.out.println("No movable pdf files were found.\n");
-        } else {
-            System.out.println(pdfFilesCountedDownload + " pdf files got moved from " + downloadFolder);
-            System.out.println(pdfFilesCountedDesktop + " pdf files got moved from " + desktop);
-            System.out.println("Total pdf files moved: " + totalPdfFilesMoved + " \n");
-        }
-
-
-        System.out.println("///// Powerpoints /////");
-        if (powerpointFilesCountedDownload <= 0 && powerpointsFilesCountedDesktop <= 0) {
-            System.out.println("No movable powerpoints were found.\n");
-        } else {
-            System.out.println(powerpointFilesCountedDownload + " powerpoints got moved from " + downloadFolder);
-            System.out.println(powerpointsFilesCountedDesktop + " powerpoints got moved from " + desktop);
-            System.out.println("Total powerpoint files moved: " + totalPowerpointFilesMoved + " \n");
-        }
-
-        System.out.println("///// Pictures /////");
-        if (pictureFilesCountedDownload <= 0 && picturesFilesCountedDesktop <= 0) {
-            System.out.println("No movable pictures were found.");
-        } else {
-            System.out.println(pictureFilesCountedDownload + " pictures got moved from " + downloadFolder);
-            System.out.println(picturesFilesCountedDesktop + " pictures got moved from " + desktop);
-            System.out.println("Total picture files moved: " + totalPictureFilesMoved);
-        }
 
     }
 

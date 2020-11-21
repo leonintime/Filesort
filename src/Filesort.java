@@ -23,35 +23,43 @@ public class Filesort {
 
     // Checks if the folders got created on the desktop
     public void checkFoldersExist() throws IOException {
+        try {
+            if (Files.exists(Paths.get(destinationPath)) || destinationPath.equals("Download_folder") ||
+                    destinationPath.equals("Desktop")) {
+                // Nothing
 
-        if (Files.exists(Paths.get(destinationPath)) || destinationPath.equals("Download_folder") ||
-                destinationPath.equals("Desktop")) {
-            // Nothing
-
-        } else {
-            Files.createDirectory(Paths.get(destinationPath));
-            System.out.println("Folder " + destinationPath + " got created");
+            } else {
+                Files.createDirectory(Paths.get(destinationPath));
+                System.out.println("Folder " + destinationPath + " got created");
+            }
+        } catch (Exception ex) {
+            System.out.println("An error occurred while checking if the file folders exist.");
         }
+
 
     }
 
 
     private void checkEnvironmentVariables() {
 
-        if (destinationPath == null || currentPath == null) {
+        try {
+            if (destinationPath == null || currentPath == null) {
 
-            if (destinationPath == null) {
-                System.out.println("The path for the destined folder needs to be set.");
-            } else if (currentPath == null) {
-                System.out.println("The path from the folder where the files are supposed to be moved away needs to be set.");
-            } else {
-                // Nothing
+                if (destinationPath == null) {
+                    System.out.println("The path for the destined folder needs to be set.");
+                } else if (currentPath == null) {
+                    System.out.println("The path from the folder where the files are supposed to be moved away needs to be set.");
+                } else {
+                    // Nothing
+                }
             }
+        } catch (Exception ex) {
+            System.out.println("An error occurred while checking if the environment variables exist.");
         }
+
     }
 
 
-    // Sorts the files
     public int sortFiles() {
         try {
             checkEnvironmentVariables();
@@ -80,6 +88,74 @@ public class Filesort {
     // Sums the found files from the download and the desktop
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
+    }
+
+    //
+    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType, int totalFilesMoved) {
+
+        switch (fileType) {
+
+            case "word":
+                System.out.println("/// WORD FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable word file/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " word file/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  word file/s got moved to " + destinationPath);
+                    System.out.println("Total word file/s moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+            case "excel":
+                System.out.println("/// EXCEL FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable excel file/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " excel file/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  excel file/s got moved to " + destinationPath);
+                    System.out.println("Total  excel file/s moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+
+            case "pdf":
+                System.out.println("/// PDF FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable pdf file/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " pdf file/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  pdf file/s got moved to " + destinationPath);
+                    System.out.println("Total pdf files moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+
+            case "pictures":
+                System.out.println("/// PICTURES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable picture/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " picture/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  picture/s got moved to " + destinationPath);
+                    System.out.println("Total picture/s moved: " + totalFilesMoved + "\n");
+                }
+                break;
+
+
+            case "powerpoints":
+                System.out.println("/// POWERPOINT FILES ///");
+                if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
+                    System.out.println("No movable picture/s found.\n");
+                } else {
+                    System.out.println(filesCountedDownload + " picture/s got moved to " + destinationPath);
+                    System.out.println(filesCountedDesktop + "  picture/s got moved to " + destinationPath);
+                    System.out.println("Total picture/s moved: " + totalFilesMoved);
+                }
+                break;
+
+        }
+
+
     }
 
 
