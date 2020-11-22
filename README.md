@@ -23,4 +23,4 @@ Pictures = C:\Users\YourUser\Pictures\
 
 If you set the variable and the path to the folder but didn't created it yet, it will be automatically created. 
 
-After you created the Environment variables, restart your device. 
+After you created the environment variables, restart your device. 
