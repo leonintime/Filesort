@@ -6,9 +6,9 @@ ENVIRONMENT VARIABLES YOU NEED TO SET in C:\Windows\System32\SystemPropertiesAdv
 The VALUES of the variable names can be set as you wish. 
 These are just examples. 
 
-MoveFolder1 = C:\Users\YourAccount\Desktop\
+MoveFolder1 = C:\Users\YourUser\Desktop\
 
-MoveFolder2 = C:\Users\YourAccount\Downloads\
+MoveFolder2 = C:\Users\YourUser\Downloads\
 
 Pdf_files = C:\Users\YourUser\Desktop\Pdfs\
 
