@@ -16,7 +16,7 @@ Word_files = C:\Users\YourUser\Desktop\Word_files\
 
 Excel_files = C:\Users\YourUser\Desktop\Excel_files\ 
 
-Pictures = C:\Users\YourUser\Desktop\Powerpoints\
+Powerpoints = C:\Users\YourUser\Desktop\Powerpoints\
 
 Pictures = C:\Users\YourUser\Pictures\
 
