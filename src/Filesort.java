@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Filesort {
 
@@ -64,25 +65,22 @@ public class Filesort {
 
     public int sortFiles() {
         try {
-            checkEnvironmentVariables();
-            checkFoldersExist();
-            File folder = new File(fileFolder);
-            String[] files = folder.list();
-            for (String file : files) {
-                String fileName = file;
-                for (int i = 0; i <= extension.length - 1; i++) {
-                    if (fileName.contains(extension[i])) {
-                        Files.move(Paths.get(currentPath + fileName),
-                                Paths.get(destinationPath + fileName));
-                        fileAmount++;
-                        System.out.println(fileName + " got successfully moved");
+                File folder = new File(fileFolder);
+                String[] files = folder.list();
+                for (String file : files) {
+                    String fileName = file;
+                    for (int i = 0; i <= extension.length - 1; i++) {
+                        if (fileName.contains(extension[i])) {
+                            Files.move(Paths.get(currentPath + fileName),
+                                    Paths.get(destinationPath + fileName));
+                            fileAmount++;
+                            System.out.println(fileName + " got successfully moved");
+                        }
                     }
                 }
-            }
-            return fileAmount;
 
+            return fileAmount;
         } catch (NullPointerException | IOException ex) {
-            System.out.println("There was an error while sorting the files!");
             return -1;
         }
     }
@@ -92,7 +90,8 @@ public class Filesort {
         return filesDesktop + filesDownload;
     }
 
-    //
+
+    // Checks how many files got moved from one to another folder
     public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType, int totalFilesMoved) {
 
         switch (fileType) {
