@@ -1,5 +1,5 @@
 # Filesort
-A program that helps you to manage your desktop and download folder.
+A program that is supposed to help you to manage your desktop and download folder.
 
 ENVIRONMENT VARIABLES YOU NEED TO SET in C:\Windows\System32\SystemPropertiesAdvanced
 
@@ -19,3 +19,4 @@ Pdf_files = Your pdf folder
 Pictures = Your picture folder 
 
 
+If you set the variable and the path to the folder but didn't created it yet, it will be automatically created. 
