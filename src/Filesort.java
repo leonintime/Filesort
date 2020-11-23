@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 public class Filesort {
 
@@ -23,65 +22,43 @@ public class Filesort {
     }
 
     // Checks if the folders got created on the desktop
-    public void checkFoldersExist() {
-        try {
-            if (Files.exists(Paths.get(destinationPath))) {
-                // Nothing
+    public void checkFoldersExist() throws IOException {
 
-            } else {
-                Files.createDirectory(Paths.get(destinationPath));
-                System.out.println("Folder " + destinationPath + " got created");
-            }
-        } catch (Exception ex) {
-            System.out.println("An error occurred while checking if the file folders exist.");
-        }
+        if (Files.exists(Paths.get(destinationPath)) || destinationPath.equals("Download_folder") ||
+                destinationPath.equals("Desktop")) {
+            // Nothing
 
-
-    }
-
-
-    private void checkEnvironmentVariables() {
-
-        try {
-            if (destinationPath == null || currentPath == null) {
-
-                if (destinationPath == null) {
-                    System.out.println("The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) " +
-                            "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
-
-                } else if (currentPath == null) {
-                    System.out.println("The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.." +
-                            "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
-                } else {
-                    // Nothing
-                }
-            }
-        } catch (Exception ex) {
-            System.out.println("An error occurred while checking if the environment variables exist.");
+        } else {
+            Files.createDirectory(Paths.get(destinationPath));
+            System.out.println("Folder " + destinationPath + " got created");
         }
 
     }
 
 
+
+    // Sorts the files
     public int sortFiles() {
         try {
-                File folder = new File(fileFolder);
-                String[] files = folder.list();
-                for (String file : files) {
-                    String fileName = file;
-                    for (int i = 0; i <= extension.length - 1; i++) {
-                        if (fileName.contains(extension[i])) {
-                            Files.move(Paths.get(currentPath + fileName),
-                                    Paths.get(destinationPath + fileName));
-                            fileAmount++;
-                            System.out.println(fileName + " got successfully moved");
-                        }
+            checkFoldersExist();
+            File folder = new File(fileFolder);
+            File[] listedFiles = folder.listFiles();
+            for (File file : listedFiles) {
+                String fileName = file.getName();
+                for (int i = 0; i <= extension.length - 1; i++) {
+                    if (fileName.contains(extension[i])) {
+                        Path temp = Files.move(Paths.get(currentPath + fileName),
+                                Paths.get(destinationPath + fileName));
+                        fileAmount++;
+                        System.out.println(fileName + " got successfully moved");
                     }
                 }
-
+            }
             return fileAmount;
+
         } catch (NullPointerException | IOException ex) {
-            return -1;
+            System.out.println("There was an error while sorting the files!");
+            return 0;
         }
     }
 
@@ -89,9 +66,6 @@ public class Filesort {
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
     }
-
-
-    // Checks how many files got moved from one to another folder
     public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType, int totalFilesMoved) {
 
         switch (fileType) {
@@ -161,3 +135,5 @@ public class Filesort {
 
 
 }
+
+
