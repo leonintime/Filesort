@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.sql.*;
 
 public class Main {
 
@@ -17,6 +17,26 @@ public class Main {
 
 
     public static void main(String[] args) {
+
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\leond\\Desktop\\Filesort\\folders.db");
+            conn.setAutoCommit(true);
+            Statement statement = conn.createStatement();
+          //  statement.execute("INSERT INTO paths (path_name, path_value) VALUES ('Pictures', 'C:\\Users\\leond\\Pictures\\')");
+
+            ResultSet results = statement.executeQuery("SELECT * FROM paths");
+            while (results.next()) {
+                System.out.println(results.getObject("path_name") + " " + results.getObject("path_value"));
+            }
+            results.close();
+            statement.close();
+            conn.close();
+
+
+        } catch (SQLException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+
 
         System.out.println("Moving files...");
 

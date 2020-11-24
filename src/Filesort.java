@@ -1,9 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 public class Filesort {
 
@@ -81,7 +79,7 @@ public class Filesort {
 
             return fileAmount;
         } catch (NullPointerException | IOException ex) {
-            return -1;
+            return 0;
         }
     }
 
