@@ -1,7 +1,10 @@
-import java.sql.*;
+package com.filesort.org;
+
+import java.sql.SQLException;
 
 public class Main {
 
+    private static final String dbCon = "jdbc:sqlite:C:\\Users\\leond\\Desktop\\Filesort\\folders.db";
     private final static String moveFolderOne = System.getenv("MoveFolder1");
     private final static String moveFolderTwo = System.getenv("MoveFolder2");
     private final static String wordFiles = System.getenv("Word_files");
@@ -19,21 +22,11 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\leond\\Desktop\\Filesort\\folders.db");
-            conn.setAutoCommit(true);
-            Statement statement = conn.createStatement();
-          //  statement.execute("INSERT INTO paths (path_name, path_value) VALUES ('Pictures', 'C:\\Users\\leond\\Pictures\\')");
 
-            ResultSet results = statement.executeQuery("SELECT * FROM paths");
-            while (results.next()) {
-                System.out.println(results.getObject("path_name") + " " + results.getObject("path_value"));
-            }
-            results.close();
-            statement.close();
-            conn.close();
-
-
+            Database db = new Database(dbCon);
+            db.showPaths();
         } catch (SQLException e) {
+
             System.out.println("Something went wrong: " + e.getMessage());
         }
 
