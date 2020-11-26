@@ -4,49 +4,48 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String DB_CON = "jdbc:sqlite:C:folders.db";
-    private final static String MOVE_FOLDER_ONE = System.getenv("MoveFolder1");
-    private final static String MOVE_FOLDER_2 = System.getenv("MoveFolder2");
-    private final static String WORD_FILES = System.getenv("Word_files");
-    private final static String EXCEL_FILES = System.getenv("Excel_files");
-    private final static String PDF_FILES = System.getenv("Pdf_files");
-    private final static String PICTURE_FILES = System.getenv("Pictures");
-    private final static String POWERPOINT_FILES = System.getenv("Powerpoints");
-    private static final String[] WORD_EXTENSIONS = new String[]{".docx", ".dotx", "docm", ".dotm", ".docb"};
-    private static final String[] EXCEL_EXTENSIONS = new String[]{".xlsx", ".xlsm", ".xltx", ".xltm "};
-    private static final String[] PDF_EXTENSIONS = new String[]{".pdf"};
-    private static final String[] POWERPOINT_EXTENSIONS = new String[]{".pptx"};
-    private static final String[] PICTURE_EXTENSIONS = new String[]{".jpg", ".jpeg", ".gif", ".png", ".PNG"};
-    private static final String[] OPTIONS = new String[]{"Sort files", "Show all paths", "Add path", "Update path ", "Delete path"};
+    private static final String dbCon = "jdbc:sqlite:C:\\Users\\leond\\Desktop\\Filesort\\folders.db";
+    private final static String moveFolderOne = System.getenv("MoveFolder1");
+    private final static String moveFolderTwo = System.getenv("MoveFolder2");
+    private final static String wordFiles = System.getenv("Word_files");
+    private final static String excelFiles = System.getenv("Excel_files");
+    private final static String pdfFiles = System.getenv("Pdf_files");
+    private final static String pictureFiles = System.getenv("Pictures");
+    private final static String powerpointFiles = System.getenv("Powerpoints");
+    private static final String[] wordExtensions = new String[]{".docx", ".dotx", "docm", ".dotm", ".docb"};
+    private static final String[] excelExtensions = new String[]{".xlsx", ".xlsm", ".xltx", ".xltm "};
+    private static final String[] pdfExtensions = new String[]{".pdf"};
+    private static final String[] powerpointExtensions = new String[]{".pptx"};
+    private static final String[] pictureExtensions = new String[]{".jpg", ".jpeg", ".gif", ".png", ".PNG"};
 
 
     public static void main(String[] args) {
 
         try {
 
-            Database db = new Database(DB_CON);
-            //   db.showPaths();
+            Database db = new Database(dbCon);
+            db.showPaths();
         } catch (SQLException e) {
 
             System.out.println("Something went wrong: " + e.getMessage());
         }
 
 
-        System.out.println("Searching for files...");
+        System.out.println("Moving files...");
 
         // Objects for the download sorting get created
-        Filesort sortWordFilesDownload = new Filesort(MOVE_FOLDER_ONE, MOVE_FOLDER_ONE, WORD_FILES, WORD_EXTENSIONS);
-        Filesort sortExcelFilesDownload = new Filesort(MOVE_FOLDER_ONE, MOVE_FOLDER_ONE, EXCEL_FILES, EXCEL_EXTENSIONS);
-        Filesort sortPdfFilesDownload = new Filesort(MOVE_FOLDER_ONE, MOVE_FOLDER_ONE, PDF_FILES, PDF_EXTENSIONS);
-        Filesort sortPicturesDownload = new Filesort(MOVE_FOLDER_ONE, MOVE_FOLDER_ONE, PICTURE_FILES, PICTURE_EXTENSIONS);
-        Filesort sortPowerpointsDownload = new Filesort(MOVE_FOLDER_ONE, MOVE_FOLDER_ONE, POWERPOINT_FILES, POWERPOINT_EXTENSIONS);
+        Filesort sortWordFilesDownload = new Filesort(moveFolderOne, moveFolderOne, wordFiles, wordExtensions);
+        Filesort sortExcelFilesDownload = new Filesort(moveFolderOne, moveFolderOne, excelFiles, excelExtensions);
+        Filesort sortPdfFilesDownload = new Filesort(moveFolderOne, moveFolderOne, pdfFiles, pdfExtensions);
+        Filesort sortPicturesDownload = new Filesort(moveFolderOne, moveFolderOne, pictureFiles, pictureExtensions);
+        Filesort sortPowerpointsDownload = new Filesort(moveFolderOne, moveFolderOne, powerpointFiles, powerpointExtensions);
 
         // Objects for the desktop sorting get created
-        Filesort sortWordFilesDesktop = new Filesort(MOVE_FOLDER_2, MOVE_FOLDER_2, WORD_FILES, WORD_EXTENSIONS);
-        Filesort sortExcelFilesDesktop = new Filesort(MOVE_FOLDER_2, MOVE_FOLDER_2, EXCEL_FILES, EXCEL_EXTENSIONS);
-        Filesort sortPdfFilesDesktop = new Filesort(MOVE_FOLDER_2, MOVE_FOLDER_2, PDF_FILES, PDF_EXTENSIONS);
-        Filesort sortPicturesDesktop = new Filesort(MOVE_FOLDER_2, MOVE_FOLDER_2, PICTURE_FILES, PICTURE_EXTENSIONS);
-        Filesort sortPowerpointsDesktop = new Filesort(MOVE_FOLDER_2, MOVE_FOLDER_2, POWERPOINT_FILES, POWERPOINT_EXTENSIONS);
+        Filesort sortWordFilesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, wordFiles, wordExtensions);
+        Filesort sortExcelFilesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, excelFiles, excelExtensions);
+        Filesort sortPdfFilesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, pdfFiles, pdfExtensions);
+        Filesort sortPicturesDesktop = new Filesort(moveFolderTwo, moveFolderTwo, pictureFiles, pictureExtensions);
+        Filesort sortPowerpointsDesktop = new Filesort(moveFolderTwo, moveFolderTwo, powerpointFiles, powerpointExtensions);
 
 
         // Files in download folder are getting moved to the destination folder
@@ -72,13 +71,12 @@ public class Main {
 
         System.out.println("\n");
 
+
         sortWordFilesDesktop.checkFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop, "word", totalWordFilesMoved);
         sortExcelFilesDesktop.checkFilesMoved(excelFilesCountedDownload, excelFilesCountedDesktop, "excel", totalExcelFilesMoved);
         sortPdfFilesDesktop.checkFilesMoved(pdfFilesCountedDownload, pdfFilesCountedDesktop, "pdf", totalPdfFilesMoved);
         sortPicturesDesktop.checkFilesMoved(pictureFilesCountedDownload, picturesFilesCountedDesktop, "pictures", totalPictureFilesMoved);
         sortPowerpointsDesktop.checkFilesMoved(powerpointFilesCountedDownload, powerpointsFilesCountedDesktop, "powerpoints", totalPowerpointFilesMoved);
-
-        Filesort.showOptions(OPTIONS);
 
 
     }
