@@ -65,19 +65,20 @@ public class Filesort {
 
     public int sortFiles() {
         try {
-                File folder = new File(fileFolder);
-                String[] files = folder.list();
-                for (String file : files) {
-                    String fileName = file;
-                    for (int i = 0; i <= extension.length - 1; i++) {
-                        if (fileName.contains(extension[i])) {
-                            Files.move(Paths.get(currentPath + fileName),
-                                    Paths.get(destinationPath + fileName));
-                            fileAmount++;
-                            System.out.println(fileName + " got successfully moved");
-                        }
+            File folder = new File(fileFolder);
+            String[] files = folder.list();
+            assert files != null;
+            for (String file : files) {
+                String fileName = file;
+                for (int i = 0; i <= extension.length - 1; i++) {
+                    if (fileName.contains(extension[i])) {
+                        Files.move(Paths.get(currentPath + fileName),
+                                Paths.get(destinationPath + fileName));
+                        fileAmount++;
+                        System.out.println(fileName + " got successfully moved");
                     }
                 }
+            }
 
             return fileAmount;
         } catch (NullPointerException | IOException ex) {
@@ -157,6 +158,15 @@ public class Filesort {
         }
 
 
+    }
+
+    public static void showOptions(String[] options) {
+        System.out.println("Options:");
+        int temp = 0;
+        for (int i = 0; i <= options.length - 1; i++) {
+            temp++;
+            System.out.println(temp + "." + options[i]);
+        }
     }
 
 

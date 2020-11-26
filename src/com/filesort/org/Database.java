@@ -4,15 +4,13 @@ import java.sql.*;
 
 public class Database {
 
-    private Connection conn;
+    private final Connection conn;
     private String sql;
     private Statement statement;
 
     public Database(String conString) throws SQLException {
         conn = DriverManager.getConnection(conString);
         this.statement = conn.createStatement();
-
-        this.statement = statement;
     }
 
     public void setSql(String sql) {
@@ -23,12 +21,24 @@ public class Database {
         return sql;
     }
 
-    public void addPath(String sql) {
+    public boolean addPath(String sql) {
 
         try {
             statement = conn.createStatement();
             statement.execute(sql);
+            return true;
+        } catch (SQLException e) {
+            e.getMessage();
+            return false;
+        }
+    }
 
+
+    public void updatePath(String sql) {
+
+        try {
+            statement = conn.createStatement();
+            statement.execute(sql);
         } catch (SQLException e) {
             e.getMessage();
         }
