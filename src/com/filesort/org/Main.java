@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String DB_CON = "jdbc:sqlite:C:folders.db";
+    private static final String DB_CON = "jdbc:sqlite:db\\sqlite-jdbc-3.32.3.2.jar";
     private final static String MOVE_FOLDER_ONE = System.getenv("MoveFolder1");
     private final static String MOVE_FOLDER_2 = System.getenv("MoveFolder2");
     private final static String WORD_FILES = System.getenv("Word_files");
