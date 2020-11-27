@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class Filesort {
 
@@ -12,6 +13,7 @@ public class Filesort {
     private final String fileFolder;
     private final String currentPath;
     private final String destinationPath;
+    private static Scanner scanner = new Scanner(System.in);
 
 
     public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
@@ -158,6 +160,30 @@ public class Filesort {
         }
 
 
+    }
+
+    public static void optionAnswer() {
+        System.out.println("Select one of the options");
+        int selectedOption = scanner.nextInt();
+
+        switch (selectedOption) {
+
+            //Sort files", "Show all paths", "Add path", "Update path ", "Delete path
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
     }
 
     public static void showOptions(String[] options) {
