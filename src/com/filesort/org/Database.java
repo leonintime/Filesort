@@ -8,10 +8,6 @@ public class Database {
     private String sql;
     private Statement statement;
 
-    public Database(String conString) throws SQLException {
-        conn = DriverManager.getConnection(conString);
-        this.statement = conn.createStatement();
-    }
 
     public void setSql(String sql) {
         this.sql = sql;
@@ -21,9 +17,10 @@ public class Database {
         return sql;
     }
 
-    public boolean addPath(String sql) {
+    public boolean addPath(String pathName, String pathValue) {
 
         try {
+            String sql = "INSERT INTO paths (path_name, path_value) VALUES ('" + pathName + "','" + pathValue + "')";
             statement = conn.createStatement();
             statement.execute(sql);
             return true;
@@ -33,6 +30,10 @@ public class Database {
         }
     }
 
+    public Database(String DB_CON) throws SQLException {
+        conn = DriverManager.getConnection(DB_CON);
+        this.statement = conn.createStatement();
+    }
 
     public void updatePath(String sql) {
 

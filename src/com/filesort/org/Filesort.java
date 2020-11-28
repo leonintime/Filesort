@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.Scanner;
 
 public class Filesort {
 
@@ -12,14 +14,17 @@ public class Filesort {
     private final String fileFolder;
     private final String currentPath;
     private final String destinationPath;
+    private static Database db;
+    private static final Scanner scanner = new Scanner(System.in);
 
 
-    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
+    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) throws SQLException {
         this.fileFolder = fileFolder;
         this.currentPath = currentPath;
         this.destinationPath = destinationPath;
         this.extension = extension;
         this.fileAmount = 0;
+        this.db = new Database(Main.DB_CON);
     }
 
     // Checks if the folders got created on the desktop
@@ -163,11 +168,57 @@ public class Filesort {
     public static void showOptions(String[] options) {
         System.out.println("Options:");
         int temp = 0;
-        for (int i = 0; i <= options.length - 1; i++) {
-            temp++;
-            System.out.println(temp + "." + options[i]);
+        try {
+            for (int i = 0; i <= options.length - 1; i++) {
+                temp++;
+                System.out.println(temp + "." + options[i]);
+            }
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 
+    public static void checkedOption() {
 
+        System.out.println("Wählen Sie eine der Optionen aus");
+        int selectedOption = scanner.nextInt();
+
+        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path"
+        switch (selectedOption) {
+            case 1:
+                break;
+            case 2:
+                db.showPaths();
+                break;
+            case 3:
+                System.out.println("Type in the name for the path (My word files).");
+                String pathName = scanner.nextLine();
+                System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
+                String pathValue = scanner.nextLine();
+                boolean successfulInserted = false;
+                try {
+                    successfulInserted = db.addPath(pathName, pathValue);
+                    if (successfulInserted) {
+                        System.out.println("Path got added");
+                    } else {
+                        System.out.println("Path couldn't get added");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                Main.endProgram = true;
+                break;
+            default:
+
+        }
+    }
 }
+
+
+
