@@ -26,7 +26,7 @@ public class Filesort {
     }
 
 
-    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) throws SQLException {
+    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
         this.fileFolder = fileFolder;
         this.currentPath = currentPath;
         this.destinationPath = destinationPath;
@@ -168,6 +168,10 @@ public class Filesort {
                 }
                 break;
 
+
+            default:
+                System.out.println("Couldn't find this file format");
+
         }
 
 
@@ -189,7 +193,7 @@ public class Filesort {
     public static void checkedOption() throws SQLException {
 
         int selectedOption = scanner.nextInt();
-        boolean successfulInserted;
+        boolean sqlSuccessful;
         String pathValue;
         String pathName;
 
@@ -211,8 +215,8 @@ public class Filesort {
                 pathValue = scanner.next();
 
                 try {
-                    successfulInserted = db.addPath(pathName, pathValue);
-                    if (successfulInserted) {
+                    sqlSuccessful = db.addPath(pathName, pathValue);
+                    if (sqlSuccessful) {
                         System.out.println("Path got added");
                     } else {
                         System.out.println("Path couldn't get added");
@@ -227,17 +231,17 @@ public class Filesort {
                 System.out.println("Type in the number for the path that you want to update");
                 int pathNumber = scanner.nextInt();
                 System.out.println("Type in the name for the path (My word files).");
-                pathName = scanner.nextLine();
+                pathName = scanner.next();
 
                 System.out.println("Enter the value for the folder (C:\\foldername\\..).");
-                pathValue = scanner.nextLine();
+                pathValue = scanner.next();
 
                 try {
-                    successfulInserted = db.updatePath(pathName, pathValue, pathNumber);
-                    if (successfulInserted) {
-                        System.out.println("Path got added");
+                    sqlSuccessful = db.updatePath(pathName, pathValue, pathNumber);
+                    if (sqlSuccessful) {
+                        System.out.println("Path got changed");
                     } else {
-                        System.out.println("Path couldn't get added");
+                        System.out.println("Path couldn't get changed");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -250,7 +254,7 @@ public class Filesort {
                 Main.endProgram = true;
                 break;
             default:
-
+                System.out.println("Sorry, there is no such option.");
         }
     }
 }
