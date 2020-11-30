@@ -197,7 +197,7 @@ public class Filesort {
         String pathValue;
         String pathName;
 
-        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path"
+        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path", "Exit"
         switch (selectedOption) {
             case 1:
                 Main.sortFiles();
@@ -249,6 +249,18 @@ public class Filesort {
                 break;
 
             case 5:
+                System.out.println("Type in the number for the path that you want to remove");
+                try {
+                    pathNumber = scanner.nextInt();
+                    sqlSuccessful = db.deletePath(pathNumber);
+                    if (sqlSuccessful) {
+                        System.out.println("Path got removed");
+                    } else {
+                        System.out.println("Path couldn't get removed");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case 6:
                 Main.endProgram = true;

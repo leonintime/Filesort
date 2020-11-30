@@ -76,6 +76,23 @@ public class Database {
     }
 
 
+    public boolean deletePath(int pathNumber) {
+
+        try {
+            openCon();
+            String sql = "DELETE FROM paths WHERE path_id = " + pathNumber + " ";
+            statement = conn.createStatement();
+            statement.execute(sql);
+            closeCon();
+            return true;
+        } catch (SQLException e) {
+            closeCon();
+            e.getMessage();
+            return false;
+        }
+    }
+
+
     public void closeCon() {
         try {
             if (!conn.isClosed()) {
