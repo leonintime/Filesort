@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Filesort {
@@ -13,15 +14,17 @@ public class Filesort {
     private final String fileFolder;
     private final String currentPath;
     private final String destinationPath;
-    private static Scanner scanner = new Scanner(System.in);
+    private static Database db;
+    private static final Scanner scanner = new Scanner(System.in);
 
 
-    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
+    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) throws SQLException {
         this.fileFolder = fileFolder;
         this.currentPath = currentPath;
         this.destinationPath = destinationPath;
         this.extension = extension;
         this.fileAmount = 0;
+        db = new Database(Main.DB_CON);
     }
 
     // Checks if the folders got created on the desktop
@@ -65,19 +68,18 @@ public class Filesort {
     }
 
 
-    public int sortFiles() {
+    public int moveFiles() {
         try {
             File folder = new File(fileFolder);
             String[] files = folder.list();
             assert files != null;
             for (String file : files) {
-                String fileName = file;
                 for (int i = 0; i <= extension.length - 1; i++) {
-                    if (fileName.contains(extension[i])) {
-                        Files.move(Paths.get(currentPath + fileName),
-                                Paths.get(destinationPath + fileName));
+                    if (file.contains(extension[i])) {
+                        Files.move(Paths.get(currentPath + file),
+                                Paths.get(destinationPath + file));
                         fileAmount++;
-                        System.out.println(fileName + " got successfully moved");
+                        System.out.println(file + " got successfully moved");
                     }
                 }
             }
@@ -94,7 +96,7 @@ public class Filesort {
     }
 
 
-    // Checks how many files got moved from one to another folder
+    // Checks how many files got moved from one to another folder<
     public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType, int totalFilesMoved) {
 
         switch (fileType) {
@@ -162,38 +164,86 @@ public class Filesort {
 
     }
 
-    public static void optionAnswer() {
-        System.out.println("Select one of the options");
+    public static void showOptions(String[] options) {
+        System.out.println("Choose one of the options below:");
+        int temp = 0;
+        try {
+            for (int i = 0; i <= options.length - 1; i++) {
+                temp++;
+                System.out.println(temp + "." + options[i]);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public static void checkedOption() {
+
         int selectedOption = scanner.nextInt();
+        boolean successfulInserted;
+        String pathValue;
+        String pathName;
 
+        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path"
         switch (selectedOption) {
-
-            //Sort files", "Show all paths", "Add path", "Update path ", "Delete path
             case 1:
-
                 break;
+
             case 2:
+                db.showPaths();
+                break;
 
-                break;
             case 3:
+                System.out.println("Type in the name for the path (My word files).");
+                pathName = scanner.nextLine();
+                System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
+                pathValue = scanner.nextLine();
+
+                try {
+                    successfulInserted = db.addPath(pathName, pathValue);
+                    if (successfulInserted) {
+                        System.out.println("Path got added");
+                    } else {
+                        System.out.println("Path couldn't get added");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
+
             case 4:
+                db.showPaths();
+                System.out.println("Type in the number for the path that you want to update");
+                int pathNumber = scanner.nextInt();
+                System.out.println("Type in the name for the path (My word files).");
+                pathName = scanner.nextLine();
+
+                System.out.println("Enter the value for the folder (C:\\foldername\\..).");
+                pathValue = scanner.nextLine();
+
+                try {
+                    successfulInserted = db.updatePath(pathName, pathValue, pathNumber);
+                    if (successfulInserted) {
+                        System.out.println("Path got added");
+                    } else {
+                        System.out.println("Path couldn't get added");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
+
             case 5:
                 break;
-            default:
+            case 6:
+
+                Main.endProgram = true;
                 break;
+            default:
+
         }
     }
-
-    public static void showOptions(String[] options) {
-        System.out.println("Options:");
-        int temp = 0;
-        for (int i = 0; i <= options.length - 1; i++) {
-            temp++;
-            System.out.println(temp + "." + options[i]);
-        }
-    }
-
-
 }
+
+
+
