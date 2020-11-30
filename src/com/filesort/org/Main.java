@@ -20,31 +20,35 @@ public class Main {
     private static final String[] OPTIONS = new String[]{"Sort files", "Show all paths", "Add path", "Update path ", "Delete path", "End program"};
     public static final String DB_CON = "jdbc:sqlite:db\\folders.db";
     public static boolean endProgram = false;
+    private static int countRunAmount = 0;
+
+    public Main() {
+    }
 
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
 
         while (!endProgram) {
 
-            try {
 
-                Database db = new Database(DB_CON);
-                db.showPaths();
-            } catch (SQLException e) {
+            if (countRunAmount < 1) {
+                System.out.println("Searching for files...");
+                try {
+                    sortFiles();
 
-                System.out.println("Something went wrong: " + e.getMessage());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                countRunAmount++;
+            } else {
+                try {
+                    Filesort.showOptions(OPTIONS);
+                    Filesort.checkedOption();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-
-            System.out.println("Searching for files...");
-
-            try {
-                Filesort.showOptions(OPTIONS);
-                Filesort.checkedOption();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
 
         }
 
@@ -52,7 +56,7 @@ public class Main {
     }
 
 
-    public void sortFiles() throws SQLException {
+    public static void sortFiles() throws SQLException {
         // Objects for the download sorting get created
         Filesort sortWordFilesDownload = new Filesort(MOVE_FOLDER_ONE, MOVE_FOLDER_ONE, WORD_FILES, WORD_EXTENSIONS);
         Filesort sortExcelFilesDownload = new Filesort(MOVE_FOLDER_ONE, MOVE_FOLDER_ONE, EXCEL_FILES, EXCEL_EXTENSIONS);
@@ -89,7 +93,6 @@ public class Main {
         int totalPictureFilesMoved = sortPicturesDownload.calcTotalFilesMoved(pictureFilesCountedDownload, picturesFilesCountedDesktop);
         int totalPowerpointFilesMoved = sortPowerpointsDownload.calcTotalFilesMoved(powerpointFilesCountedDownload, powerpointsFilesCountedDesktop);
 
-        System.out.println("\n");
 
         sortWordFilesDesktop.checkFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop, "word", totalWordFilesMoved);
         sortExcelFilesDesktop.checkFilesMoved(excelFilesCountedDownload, excelFilesCountedDesktop, "excel", totalExcelFilesMoved);

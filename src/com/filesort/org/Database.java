@@ -13,13 +13,6 @@ public class Database {
         this.statement = conn.createStatement();
     }
 
-    public void setSql(String sql) {
-        this.sql = sql;
-    }
-
-    public String getSql() {
-        return sql;
-    }
 
     public void showPaths() {
 
@@ -53,7 +46,7 @@ public class Database {
     public boolean updatePath(String pathName, String pathValue, int pathNumber) {
 
         try {
-            String sql = "UPDATE paths SET path_name = '" + pathName + "', path_value = '" + pathValue + "' WHERE path_id = + " + pathName + " ";
+            String sql = "UPDATE paths SET path_name = '" + pathName + "', path_value = '" + pathValue + "' WHERE path_id = + " + pathNumber + " ";
             statement = conn.createStatement();
             statement.execute(sql);
             closeCon();
@@ -63,9 +56,6 @@ public class Database {
             return false;
         }
     }
-
-
-
 
 
     public void closeCon() {
