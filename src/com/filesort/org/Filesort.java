@@ -14,8 +14,16 @@ public class Filesort {
     private final String fileFolder;
     private final String currentPath;
     private final String destinationPath;
-    private static Database db;
     private static final Scanner scanner = new Scanner(System.in);
+    private static Database db;
+
+    static {
+        try {
+            db = new Database(Main.DB_CON);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) throws SQLException {
@@ -24,7 +32,8 @@ public class Filesort {
         this.destinationPath = destinationPath;
         this.extension = extension;
         this.fileAmount = 0;
-        db = new Database(Main.DB_CON);
+
+
     }
 
     // Checks if the folders got created on the desktop
@@ -177,7 +186,7 @@ public class Filesort {
         }
     }
 
-    public static void checkedOption() {
+    public static void checkedOption() throws SQLException {
 
         int selectedOption = scanner.nextInt();
         boolean successfulInserted;
@@ -187,17 +196,19 @@ public class Filesort {
         // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path"
         switch (selectedOption) {
             case 1:
+                Main.sortFiles();
                 break;
 
             case 2:
                 db.showPaths();
+                System.out.println("\n");
                 break;
 
             case 3:
                 System.out.println("Type in the name for the path (My word files).");
-                pathName = scanner.nextLine();
+                pathName = scanner.next();
                 System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
-                pathValue = scanner.nextLine();
+                pathValue = scanner.next();
 
                 try {
                     successfulInserted = db.addPath(pathName, pathValue);
@@ -236,7 +247,6 @@ public class Filesort {
             case 5:
                 break;
             case 6:
-
                 Main.endProgram = true;
                 break;
             default:
