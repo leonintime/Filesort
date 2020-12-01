@@ -1,5 +1,9 @@
 package com.filesort.org;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 
 public class Database {
@@ -41,6 +45,40 @@ public class Database {
             e.getMessage();
         }
     }
+
+
+    public int moveFiles() {
+        try {
+            openCon();
+            String selectSql = "SELECT path_id, path_name,path_value FROM paths";
+            ResultSet results = statement.executeQuery(selectSql);
+            while (results.next()) {
+                String folderName = results.getObject("path_name").toString();
+                String folderPath = results.getObject("path_value").toString();
+
+
+                File folder = new File(fileFolder);
+                String[] files = folder.list();
+                assert files != null;
+                for (String file : files) {
+                    for (int i = 0; i <= extension.length - 1; i++) {
+                        if (file.contains(extension[i])) {
+                            Files.move(Paths.get(currentPath + file),
+                                    Paths.get(destinationPath + file));
+                            fileAmount++;
+                            System.out.println(file + " got successfully moved");
+                        }
+                    }
+                }
+
+                return fileAmount;
+            }
+
+        } catch (NullPointerException | IOException | SQLException ex) {
+            return 0;
+        }
+    }
+
 
     public boolean addPath(String pathName, String pathValue) {
 
