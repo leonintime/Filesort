@@ -1,9 +1,5 @@
 package com.filesort.org;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 
 public class Database {
@@ -12,6 +8,10 @@ public class Database {
     private String sql;
     private Statement statement;
     private static String DB_CON;
+//
+//    public enum Options {
+//        MONDAY,TUESDAY,WEDNESDAY
+//    }
 
     public Database(String DB_CON) throws SQLException {
         Database.DB_CON = DB_CON;
@@ -30,14 +30,14 @@ public class Database {
     }
 
 
-    public void showPaths() {
+    public void showMovingFolders() {
 
         try {
             openCon();
-            String selectSql = "SELECT path_id, path_name,path_value FROM paths";
+            String selectSql = "SELECT mff_id,  mff_name, mff_path FROM moving_files_folder";
             ResultSet results = statement.executeQuery(selectSql);
             while (results.next()) {
-                System.out.println(results.getObject("path_id") + " " + results.getObject("path_name") + " " + results.getObject("path_value"));
+                System.out.println(results.getObject("mff_id") + " " + results.getObject("mff_name") + " " + results.getObject("mff_path"));
             }
             closeCon();
         } catch (SQLException e) {
@@ -47,44 +47,60 @@ public class Database {
     }
 
 
-    public int moveFiles() {
+    public void showDestinationFolders() {
+
         try {
             openCon();
-            String selectSql = "SELECT path_id, path_name,path_value FROM paths";
+            String selectSql = "SELECT dest_fold_id, dest_fold_name, dest_fold_path FROM destination_folder";
             ResultSet results = statement.executeQuery(selectSql);
             while (results.next()) {
-                String folderName = results.getObject("path_name").toString();
-                String folderPath = results.getObject("path_value").toString();
-
-
-                File folder = new File(fileFolder);
-                String[] files = folder.list();
-                assert files != null;
-                for (String file : files) {
-                    for (int i = 0; i <= extension.length - 1; i++) {
-                        if (file.contains(extension[i])) {
-                            Files.move(Paths.get(currentPath + file),
-                                    Paths.get(destinationPath + file));
-                            fileAmount++;
-                            System.out.println(file + " got successfully moved");
-                        }
-                    }
-                }
-
-                return fileAmount;
+                System.out.println(results.getObject("dest_fold_id") + " " + results.getObject("dest_fold_name") + " " + results.getObject("dest_fold_path"));
             }
-
-        } catch (NullPointerException | IOException | SQLException ex) {
-            return 0;
+            closeCon();
+        } catch (SQLException e) {
+            closeCon();
+            e.getMessage();
         }
     }
 
 
-    public boolean addPath(String pathName, String pathValue) {
+//    public int moveFiles() {
+//        try {
+//            openCon();
+//            String selectSql = "SELECT mff_id,  mff_name, mff_path FROM moving_files_folder";
+//            ResultSet results = statement.executeQuery(selectSql);
+//            while (results.next()) {
+//                String folderName = results.getObject("mff_name").toString();
+//                String folderPath = results.getObject("mff_path").toString();
+//
+//                File folder = new File(folderName);
+//                String[] files = folder.list();
+//                assert files != null;
+//                for (String file : files) {
+//                    for (int i = 0; i <= extension.length - 1; i++) {
+//                        if (file.contains(extension[i])) {
+//                            Files.move(Paths.get(currentPath + file),
+//                                    Paths.get(destinationPath + file));
+//                            fileAmount++;
+//                            System.out.println(file + " got successfully moved");
+//                        }
+//                    }
+//                }
+//
+//                return fileAmount;
+//            }
+//
+//        } catch (NullPointerException | IOException | SQLException ex) {
+//            return 0;
+//        }
+//    }
+
+
+    public boolean addMovingFilesFolder(String folder, String path) {
 
         try {
             openCon();
-            String sql = "INSERT INTO paths (path_name, path_value) VALUES ('" + pathName + "','" + pathValue + "')";
+            String sql = "INSERT INTO moving_files_folder (mff_name, mff_path) VALUES ('" + folder + "','" + path + "')";
             statement = conn.createStatement();
             statement.execute(sql);
             closeCon();
@@ -97,11 +113,11 @@ public class Database {
     }
 
 
-    public boolean updatePath(String pathName, String pathValue, int pathNumber) {
+    public boolean updateMovingFilesFolder(String folder, String path, int id) {
 
         try {
             openCon();
-            String sql = "UPDATE paths SET path_name = '" + pathName + "', path_value = '" + pathValue + "' WHERE path_id = " + pathNumber + " ";
+            String sql = "UPDATE moving_files_folder SET mff_name = '" + folder + "', mff_path = '" + path + "' WHERE mff_id = " + id + " ";
             statement = conn.createStatement();
             statement.execute(sql);
             closeCon();
@@ -114,11 +130,62 @@ public class Database {
     }
 
 
-    public boolean deletePath(int pathNumber) {
+    public boolean deleteMovingFilesFolder(int id) {
 
         try {
             openCon();
-            String sql = "DELETE FROM paths WHERE path_id = " + pathNumber + " ";
+            String sql = "DELETE FROM moving_files_folder WHERE mff_id = " + id + " ";
+            statement = conn.createStatement();
+            statement.execute(sql);
+            closeCon();
+            return true;
+        } catch (SQLException e) {
+            closeCon();
+            e.getMessage();
+            return false;
+        }
+    }
+
+
+    public boolean addDestinationFolder(String folder, String path) {
+
+        try {
+            openCon();
+            String sql = "INSERT INTO destination_folder (dest_fold_name, dest_fold_path)  VALUES  ('" + folder + "','" + path + "')";
+            statement = conn.createStatement();
+            statement.execute(sql);
+            closeCon();
+            return true;
+        } catch (SQLException e) {
+            closeCon();
+            e.getMessage();
+            return false;
+        }
+    }
+
+
+    public boolean updateDestinationFolder(String folder, String path, int id) {
+
+        try {
+            openCon();
+            String sql = "UPDATE destination_folder SET dest_fold_name = '" + folder + "', dest_fold_path = '" + path + "' WHERE dest_fold_id = " + id + " ";
+            statement = conn.createStatement();
+            statement.execute(sql);
+            closeCon();
+            return true;
+        } catch (SQLException e) {
+            closeCon();
+            e.getMessage();
+            return false;
+        }
+    }
+
+
+    public boolean deleteDestinationFolder(int id) {
+
+        try {
+            openCon();
+            String sql = "DELETE FROM destination_folder WHERE dest_fold_id = " + id + " ";
             statement = conn.createStatement();
             statement.execute(sql);
             closeCon();
