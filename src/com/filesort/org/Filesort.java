@@ -16,6 +16,8 @@ public class Filesort {
     private final String destinationPath;
     private static final Scanner scanner = new Scanner(System.in);
     private static Database db;
+    private static String[] folderOptions = new String[]{"Moving files folders", "Destination folder"};
+
 
     static {
         try {
@@ -32,7 +34,6 @@ public class Filesort {
         this.destinationPath = destinationPath;
         this.extension = extension;
         this.fileAmount = 0;
-
 
     }
 
@@ -193,9 +194,12 @@ public class Filesort {
     public static void checkedOption() throws SQLException {
 
         int selectedOption = scanner.nextInt();
+        int selectedInnerOption;
         boolean sqlSuccessful;
         String pathValue;
         String pathName;
+        int optionCounter = 1;
+
 
         // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path", "Exit"
         switch (selectedOption) {
@@ -204,18 +208,51 @@ public class Filesort {
                 break;
 
             case 2:
-                db.showPaths();
-                System.out.println("\n");
+                System.out.println("Would you like to see the destination folders or the moving files folders?");
+                optionCounter = 1;
+                for (String option : folderOptions) {
+                    System.out.println(optionCounter + "." + option);
+                    optionCounter++;
+                }
+                selectedInnerOption = scanner.nextInt();
+                switch (selectedInnerOption) {
+                    case 1:
+                        db.showMovingFolders();
+                        System.out.println("\n");
+                        break;
+                    case 2:
+                        db.showDestinationFolders();
+                        System.out.println("\n");
+                        break;
+                }
                 break;
 
             case 3:
+
+                System.out.println("Would you like to add a new path for a folder?");
+
+                for (String option : folderOptions) {
+                    System.out.println(optionCounter + "." + option);
+                    optionCounter++;
+                }
+                selectedInnerOption = scanner.nextInt();
+                switch (selectedInnerOption) {
+                    case 1:
+
+                        System.out.println("\n");
+                        break;
+                    case 2:
+
+                        System.out.println("\n");
+                        break;
+                }
                 System.out.println("Type in the name for the path (My word files).");
                 pathName = scanner.next();
                 System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
                 pathValue = scanner.next();
 
                 try {
-                    sqlSuccessful = db.addPath(pathName, pathValue);
+                    sqlSuccessful = db.addMovingFilesFolder(pathName, pathValue);
                     if (sqlSuccessful) {
                         System.out.println("Path got added");
                     } else {
@@ -227,7 +264,7 @@ public class Filesort {
                 break;
 
             case 4:
-                db.showPaths();
+                db.showMovingFolders();
                 System.out.println("Type in the number for the path that you want to update");
                 int pathNumber = scanner.nextInt();
                 System.out.println("Type in the name for the path (My word files).");
@@ -237,7 +274,7 @@ public class Filesort {
                 pathValue = scanner.next();
 
                 try {
-                    sqlSuccessful = db.updatePath(pathName, pathValue, pathNumber);
+                    sqlSuccessful = db.updateMovingFilesFolder(pathName, pathValue, pathNumber);
                     if (sqlSuccessful) {
                         System.out.println("Path got changed");
                     } else {
@@ -252,7 +289,7 @@ public class Filesort {
                 System.out.println("Type in the number for the path that you want to remove");
                 try {
                     pathNumber = scanner.nextInt();
-                    sqlSuccessful = db.deletePath(pathNumber);
+                    sqlSuccessful = db.deleteMovingFilesFolder(pathNumber);
                     if (sqlSuccessful) {
                         System.out.println("Path got removed");
                     } else {
@@ -270,6 +307,7 @@ public class Filesort {
         }
     }
 }
+
 
 
 
