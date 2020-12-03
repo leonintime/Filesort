@@ -16,7 +16,7 @@ public class Filesort {
     private final String destinationPath;
     private static final Scanner scanner = new Scanner(System.in);
     private static Database db;
-    private static String[] folderOptions = new String[]{"Moving files folders", "Destination folder"};
+    private static final String[] folderOptions = new String[]{"Moving files folders", "Destination folder"};
 
 
     static {
@@ -200,6 +200,8 @@ public class Filesort {
         String folder = null;
         int id = 0;
         int optionCounter = 1;
+        int dest_fold_id = 0;
+        int mff_id = 0;
 
 
         // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path", "Exit"
@@ -331,66 +333,110 @@ public class Filesort {
                         }
                         System.out.println("\n");
                         break;
-
-                    case 5:
-                        System.out.println("What kind of folder do you want to remove? :");
-
-                        for (String option : folderOptions) {
-                            System.out.println(optionCounter + "." + option);
-                            optionCounter++;
-                        }
-                        selectedInnerOption = scanner.nextInt();
-                        switch (selectedInnerOption) {
-                            case 1:
-                                try {
-                                    System.out.println("Type in the number of the folder you want to remove");
-                                    id = scanner.nextInt();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                                try {
-                                    sqlSuccessful = db.deleteMovingFilesFolder(id);
-                                    if (sqlSuccessful) {
-                                        System.out.println("Folder got removed");
-                                    } else {
-                                        System.out.println("Folder couldn't get removed");
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                System.out.println("\n");
-                                break;
-                            case 2:
-                                try {
-                                    System.out.println("Type in the number of the folder you want to remove");
-                                    id = scanner.nextInt();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                                try {
-                                    sqlSuccessful = db.deleteDestinationFolder(id);
-                                    if (sqlSuccessful) {
-                                        System.out.println("Folder got removed");
-                                    } else {
-                                        System.out.println("Folder couldn't get removed");
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                System.out.println("\n");
-                                break;
-                            case 6:
-                                Main.endProgram = true;
-                                break;
-                            default:
-                                System.out.println("Sorry, there is no such option.");
-                        }
                 }
+
+            case 5:
+                System.out.println("What kind of folder do you want to remove? :");
+
+                for (String option : folderOptions) {
+                    System.out.println(optionCounter + "." + option);
+                    optionCounter++;
+                }
+                selectedInnerOption = scanner.nextInt();
+                switch (selectedInnerOption) {
+                    case 1:
+                        try {
+                            System.out.println("Type in the number of the folder you want to remove");
+                            id = scanner.nextInt();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            sqlSuccessful = db.deleteMovingFilesFolder(id);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got removed");
+                            } else {
+                                System.out.println("Folder couldn't get removed");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                    case 2:
+                        try {
+                            System.out.println("Type in the number of the folder you want to remove");
+                            id = scanner.nextInt();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            sqlSuccessful = db.deleteDestinationFolder(id);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got removed");
+                            } else {
+                                System.out.println("Folder couldn't get removed");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                }
+
+
+            case 6:
+
+                db.getAllDestinationFolderIds();
+                db.getAllMovingFolderIds();
+
+                System.out.println("Type in the number of the folder that you want to connect with a destination folder");
+                try {
+                    if (scanner.hasNextInt()) {
+                        mff_id = scanner.nextInt();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("\n");
+                System.out.println("Type in the number for the folder that the files are supposed to be moved to");
+
+
+                try {
+                    if (scanner.hasNextInt()) {
+                        dest_fold_id = scanner.nextInt();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    sqlSuccessful = db.connectFolders(mff_id, dest_fold_id);
+                    if (sqlSuccessful) {
+                        System.out.println("Folders got connected");
+                    } else {
+                        System.out.println("Folders couldn't get connected");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("\n");
+                break;
+
+
+            case 7:
+                Main.endProgram = true;
+                break;
+            default:
+                System.out.println("Sorry, there is no such option.");
         }
     }
 }
+
+
 
 
 

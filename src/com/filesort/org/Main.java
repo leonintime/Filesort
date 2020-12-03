@@ -17,7 +17,8 @@ public class Main {
     private static final String[] PDF_EXTENSIONS = new String[]{".pdf"};
     private static final String[] POWERPOINT_EXTENSIONS = new String[]{".pptx"};
     private static final String[] PICTURE_EXTENSIONS = new String[]{".jpg", ".jpeg", ".gif", ".png", ".PNG"};
-    private static final String[] OPTIONS = new String[]{"Sort files", "Show paths", "Add path", "Update path ", "Delete path", "End program"};
+    private static final String[] OPTIONS = new String[]{"Sort files", "Show paths", "Add path", "Update path ",
+            "Delete path", "Connect moving files folder with destination folder", "End program"};
     public static final String DB_CON = "jdbc:sqlite:db\\folders.db";
     public static boolean endProgram = false;
     private static int countRunAmount = 0;
