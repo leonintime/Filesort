@@ -1,7 +1,5 @@
 package com.filesort.org;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -14,9 +12,9 @@ public class Filesort {
     private final String fileFolder;
     private final String currentPath;
     private final String destinationPath;
-    private static final Scanner scanner = new Scanner(System.in);
-    private static Database db;
-    private static final String[] folderOptions = new String[]{"Moving files folders", "Destination folder"};
+    private static final Scanner SCANNER = new Scanner(System.in);
+    public static Database db;
+    private static final String[] FOLDER_OPTIONS = new String[]{"Moving files folders", "Destination folder"};
 
 
     static {
@@ -78,27 +76,27 @@ public class Filesort {
     }
 
 
-    public int moveFiles() {
-        try {
-            File folder = new File(fileFolder);
-            String[] files = folder.list();
-            assert files != null;
-            for (String file : files) {
-                for (int i = 0; i <= extension.length - 1; i++) {
-                    if (file.contains(extension[i])) {
-                        Files.move(Paths.get(currentPath + file),
-                                Paths.get(destinationPath + file));
-                        fileAmount++;
-                        System.out.println(file + " got successfully moved");
-                    }
-                }
-            }
-
-            return fileAmount;
-        } catch (NullPointerException | IOException ex) {
-            return 0;
-        }
-    }
+//    public int moveFiles() {
+//        try {
+//            File folder = new File(fileFolder);
+//            String[] files = folder.list();
+//            assert files != null;
+//            for (String file : files) {
+//                for (int i = 0; i <= extension.length - 1; i++) {
+//                    if (file.contains(extension[i])) {
+//                        Files.move(Paths.get(currentPath + file),
+//                                Paths.get(destinationPath + file));
+//                        fileAmount++;
+//                        System.out.println(file + " got successfully moved");
+//                    }
+//                }
+//            }
+//
+//            return fileAmount;
+//        } catch (NullPointerException | IOException ex) {
+//            return 0;
+//        }
+//    }
 
     // Sums the found files from the download and the desktop
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
@@ -193,7 +191,7 @@ public class Filesort {
 
     public static void checkedOption() throws SQLException {
 
-        int selectedOption = scanner.nextInt();
+        int selectedOption = SCANNER.nextInt();
         int selectedInnerOption;
         boolean sqlSuccessful;
         String path = null;
@@ -213,11 +211,11 @@ public class Filesort {
             case 2:
                 System.out.println("Would you like to see the destination folders or the moving files folders?");
                 optionCounter = 1;
-                for (String option : folderOptions) {
+                for (String option : FOLDER_OPTIONS) {
                     System.out.println(optionCounter + "." + option);
                     optionCounter++;
                 }
-                selectedInnerOption = scanner.nextInt();
+                selectedInnerOption = SCANNER.nextInt();
                 switch (selectedInnerOption) {
                     case 1:
                         db.showMovingFolders();
@@ -234,17 +232,17 @@ public class Filesort {
 
                 System.out.println("What kind of folder do you want to add? :");
 
-                for (String option : folderOptions) {
+                for (String option : FOLDER_OPTIONS) {
                     System.out.println(optionCounter + "." + option);
                     optionCounter++;
                 }
-                selectedInnerOption = scanner.nextInt();
+                selectedInnerOption = SCANNER.nextInt();
                 switch (selectedInnerOption) {
                     case 1:
                         System.out.println("Type in the name for the name for the folder");
-                        folder = scanner.next();
+                        folder = SCANNER.next();
                         System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
-                        path = scanner.next();
+                        path = SCANNER.next();
 
                         try {
                             sqlSuccessful = db.addMovingFilesFolder(folder, path);
@@ -260,9 +258,9 @@ public class Filesort {
                         break;
                     case 2:
                         System.out.println("Type in the name for the folder");
-                        folder = scanner.next();
+                        folder = SCANNER.next();
                         System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
-                        path = scanner.next();
+                        path = SCANNER.next();
 
                         try {
                             sqlSuccessful = db.addDestinationFolder(folder, path);
@@ -283,20 +281,20 @@ public class Filesort {
             case 4:
                 System.out.println("What kind of folder do you want to update?");
 
-                for (String option : folderOptions) {
+                for (String option : FOLDER_OPTIONS) {
                     System.out.println(optionCounter + "." + option);
                     optionCounter++;
                 }
-                selectedInnerOption = scanner.nextInt();
+                selectedInnerOption = SCANNER.nextInt();
                 switch (selectedInnerOption) {
                     case 1:
                         try {
                             System.out.println("Type in the number of the folder you want to edit");
-                            id = scanner.nextInt();
+                            id = SCANNER.nextInt();
                             System.out.println("Type in the name for the folder");
-                            folder = scanner.next();
+                            folder = SCANNER.next();
                             System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
-                            path = scanner.next();
+                            path = SCANNER.next();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -315,11 +313,11 @@ public class Filesort {
                         break;
                     case 2:
                         System.out.println("Type in the number of the folder you want to edit");
-                        id = scanner.nextInt();
+                        id = SCANNER.nextInt();
                         System.out.println("Type in the name for the folder");
-                        folder = scanner.next();
+                        folder = SCANNER.next();
                         System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
-                        path = scanner.next();
+                        path = SCANNER.next();
 
                         try {
                             sqlSuccessful = db.updateDestinationFolder(folder, path, id);
@@ -338,16 +336,16 @@ public class Filesort {
             case 5:
                 System.out.println("What kind of folder do you want to remove? :");
 
-                for (String option : folderOptions) {
+                for (String option : FOLDER_OPTIONS) {
                     System.out.println(optionCounter + "." + option);
                     optionCounter++;
                 }
-                selectedInnerOption = scanner.nextInt();
+                selectedInnerOption = SCANNER.nextInt();
                 switch (selectedInnerOption) {
                     case 1:
                         try {
                             System.out.println("Type in the number of the folder you want to remove");
-                            id = scanner.nextInt();
+                            id = SCANNER.nextInt();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -367,7 +365,7 @@ public class Filesort {
                     case 2:
                         try {
                             System.out.println("Type in the number of the folder you want to remove");
-                            id = scanner.nextInt();
+                            id = SCANNER.nextInt();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -388,25 +386,25 @@ public class Filesort {
 
 
             case 6:
-
+                System.out.println("Destination folders: ");
                 db.getAllDestinationFolderIds();
+                System.out.println("\n");
+                System.out.println("Moving file folders: ");
                 db.getAllMovingFolderIds();
 
-                System.out.println("Type in the number of the folder that you want to connect with a destination folder");
+                System.out.println(" Number of the folder where the files are supposed to be moved away from");
                 try {
-                    if (scanner.hasNextInt()) {
-                        mff_id = scanner.nextInt();
+                    if (SCANNER.hasNextInt()) {
+                        mff_id = SCANNER.nextInt();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                System.out.println("\n");
-                System.out.println("Type in the number for the folder that the files are supposed to be moved to");
-
+                System.out.println("Number of the folder where the files are supposed to be moved to");
 
                 try {
-                    if (scanner.hasNextInt()) {
-                        dest_fold_id = scanner.nextInt();
+                    if (SCANNER.hasNextInt()) {
+                        dest_fold_id = SCANNER.nextInt();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

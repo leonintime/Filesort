@@ -24,7 +24,7 @@
       <SourceTextLength>137</SourceTextLength>
     </view>
     <view id="13" parent="2" name="getConnectedFolders">
-      <SourceTextLength>429</SourceTextLength>
+      <SourceTextLength>382</SourceTextLength>
     </view>
     <view id="14" parent="2" name="getFileExtensionsById">
       <SourceTextLength>399</SourceTextLength>
@@ -153,11 +153,11 @@
       <Position>3</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <column id="45" parent="13" name="dest_fold_path">
+    <column id="45" parent="13" name="mff_id">
       <Position>4</Position>
-      <DataType>TEXT|0s</DataType>
+      <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="46" parent="13" name="file_ext_ext">
+    <column id="46" parent="13" name="dest_fold_path">
       <Position>5</Position>
       <DataType>TEXT|0s</DataType>
     </column>

@@ -1,11 +1,15 @@
 package com.filesort.org;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
     private Connection conn;
-    private String sql;
     private Statement statement;
     private static String DB_CON;
 //
@@ -65,10 +69,10 @@ public class Database {
 
 
     public void getAllMovingFolderIds() {
-        System.out.println("Moving file folders: ");
+
         try {
             openCon();
-            String selectSql = "SELECT mff_id FROM moving_files_folder";
+            String selectSql = "SELECT mff_id,mff_path  FROM moving_files_folder";
             ResultSet results = statement.executeQuery(selectSql);
             while (results.next()) {
                 System.out.println(results.getObject("mff_id") + " " + results.getObject("mff_path"));
@@ -83,7 +87,7 @@ public class Database {
 
 
     public void getAllDestinationFolderIds() {
-        System.out.println("Destination folders: ");
+
         try {
             openCon();
             String selectSql = "SELECT dest_fold_id, dest_fold_path FROM destination_folder";
@@ -100,36 +104,90 @@ public class Database {
     }
 
 
-//    public int moveFiles() {
-//        try {
-//            openCon();
-//            String selectSql = "SELECT mff_id,  mff_name, mff_path FROM moving_files_folder";
-//            ResultSet results = statement.executeQuery(selectSql);
-//            while (results.next()) {
-//                String folderName = results.getObject("mff_name").toString();
-//                String folderPath = results.getObject("mff_path").toString();
-//
-//                File folder = new File(folderName);
-//                String[] files = folder.list();
-//                assert files != null;
-//                for (String file : files) {
-//                    for (int i = 0; i <= extension.length - 1; i++) {
-//                        if (file.contains(extension[i])) {
-//                            Files.move(Paths.get(currentPath + file),
-//                                    Paths.get(destinationPath + file));
-//                            fileAmount++;
-//                            System.out.println(file + " got successfully moved");
-//                        }
-//                    }
-//                }
-//
-//                return fileAmount;
-//            }
-//
-//        } catch (NullPointerException | IOException | SQLException ex) {
-//            return 0;
-//        }
-//    }
+    public int moveFiles() {
+        String destFolderPath = null;
+        String moveFromFolder = null;
+        int mff_id = 0;
+        int fileAmount = 0;
+        ArrayList<String> extensionList = new ArrayList<>();
+        // String[] extensions = new String[]{};
+        try {
+
+
+            ResultSet results = getConnectedFolders();
+
+            while (results.next()) {
+                // Powerpoint, word etc
+                destFolderPath = results.getObject("dest_fold_path").toString();
+                moveFromFolder = results.getObject("mff_path").toString();
+                mff_id = (int) results.getObject("mff_id");
+
+                ResultSet extensions = getConnectedFolderExtensions(mff_id);
+                while (extensions.next()) {
+                    extensionList.add((String) extensions.getObject("file_ext_ext"));
+                }
+
+                assert destFolderPath != null;
+                File folder = new File(moveFromFolder);
+                String[] files = folder.list();
+                assert files != null;
+                for (String file : files) {
+                    for (int i = 0; i < extensionList.size(); i++) {
+                        if (file.contains(extensionList.get(i))) {
+                            Files.move(Paths.get(destFolderPath + file),
+                                    Paths.get(moveFromFolder + file));
+                            fileAmount++;
+                            System.out.println(file + " got successfully moved");
+                        }
+                    }
+                }
+                closeCon();
+            }
+
+
+            return fileAmount;
+
+
+        } catch (NullPointerException | IOException | SQLException ex) {
+            System.out.println(ex.getMessage());
+            return 0;
+        }
+    }
+
+
+    public ResultSet getConnectedFolders() throws SQLException {
+        openCon();
+        String selectSql = "select distinct moving_files_folder.mff_name, moving_files_folder.mff_path, dest_fold_name, moving_files_folder.mff_id,  dest_fold_path\n" +
+                "from file_moving,\n" +
+                "     destination_folder,\n" +
+                "     file_extensions,\n" +
+                "     moving_files_folder\n" +
+                "\n" +
+                "WHERE file_moving.dest_folder_id = destination_folder.dest_fold_id\n" +
+                "  AND file_moving.mff_id = moving_files_folder.mff_id";
+        ResultSet results = statement.executeQuery(selectSql);
+        closeCon();
+        return results;
+    }
+
+
+    public ResultSet getConnectedFolderExtensions(int id) throws SQLException {
+        openCon();
+        String selectSql = "SELECT \n" +
+                "       file_ext_ext\n" +
+                "FROM file_moving,\n" +
+                "     destination_folder,\n" +
+                "     file_extensions,\n" +
+                "     moving_files_folder\n" +
+                "\n" +
+                "WHERE file_moving.dest_folder_id = destination_folder.dest_fold_id\n" +
+                "  AND file_moving.mff_id = moving_files_folder.mff_id\n" +
+                "  AND file_extensions.dest_folder_id = destination_folder.dest_fold_id\n" +
+                "  AND file_moving.dest_folder_id = " + id;
+        ResultSet results = statement.executeQuery(selectSql);
+        closeCon();
+        return results;
+    }
 
 
     public boolean addMovingFilesFolder(String folder, String path) {
