@@ -22,6 +22,17 @@ public class Main {
     public static final String DB_CON = "jdbc:sqlite:db\\folders.db";
     public static boolean endProgram = false;
     private static int countRunAmount = 0;
+    private static Database db;
+
+
+    static {
+        try {
+            db = new Database(DB_CON);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public Main() {
     }
@@ -74,18 +85,18 @@ public class Main {
 
 
         // Files in download folder are getting moved to the destination folder
-        int wordFilesCountedDownload = sortWordFilesDownload.moveFiles();
-        int excelFilesCountedDownload = sortExcelFilesDownload.moveFiles();
-        int pdfFilesCountedDownload = sortPdfFilesDownload.moveFiles();
-        int pictureFilesCountedDownload = sortPicturesDownload.moveFiles();
-        int powerpointFilesCountedDownload = sortPowerpointsDownload.moveFiles();
+        int wordFilesCountedDownload = sortWordFilesDownload.db.moveFiles();
+        int excelFilesCountedDownload = sortExcelFilesDownload.db.moveFiles();
+        int pdfFilesCountedDownload = sortPdfFilesDownload.db.moveFiles();
+        int pictureFilesCountedDownload = sortPicturesDownload.db.moveFiles();
+        int powerpointFilesCountedDownload = sortPowerpointsDownload.db.moveFiles();
 
         // Files on the desktop folder are getting moved to the destination folder
-        int wordFilesCountedDesktop = sortWordFilesDesktop.moveFiles();
-        int excelFilesCountedDesktop = sortExcelFilesDesktop.moveFiles();
-        int pdfFilesCountedDesktop = sortPdfFilesDesktop.moveFiles();
-        int picturesFilesCountedDesktop = sortPicturesDesktop.moveFiles();
-        int powerpointsFilesCountedDesktop = sortPowerpointsDesktop.moveFiles();
+        int wordFilesCountedDesktop = sortWordFilesDesktop.db.moveFiles();
+        int excelFilesCountedDesktop = sortExcelFilesDesktop.db.moveFiles();
+        int pdfFilesCountedDesktop = sortPdfFilesDesktop.db.moveFiles();
+        int picturesFilesCountedDesktop = sortPicturesDesktop.db.moveFiles();
+        int powerpointsFilesCountedDesktop = sortPowerpointsDesktop.db.moveFiles();
 
         // Desktop and download files are added together to calculate the total amount
         int totalWordFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop);
