@@ -388,8 +388,9 @@ public class Filesort {
 
 
             case 6:
-
+                System.out.println("Destination folders: ");
                 db.getAllDestinationFolderIds();
+                System.out.println("Moving file folders: ");
                 db.getAllMovingFolderIds();
 
                 System.out.println("Type in the number of the folder that you want to connect with a destination folder");

@@ -65,7 +65,7 @@ public class Database {
 
 
     public void getAllMovingFolderIds() {
-        System.out.println("Moving file folders: ");
+
         try {
             openCon();
             String selectSql = "SELECT mff_id FROM moving_files_folder";
@@ -83,7 +83,7 @@ public class Database {
 
 
     public void getAllDestinationFolderIds() {
-        System.out.println("Destination folders: ");
+
         try {
             openCon();
             String selectSql = "SELECT dest_fold_id, dest_fold_path FROM destination_folder";
