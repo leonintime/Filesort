@@ -116,6 +116,7 @@ public class Database {
 
             ResultSet results = getConnectedFolders();
 
+
             while (results.next()) {
                 // Powerpoint, word etc
                 destFolderPath = results.getObject("dest_fold_path").toString();
@@ -149,6 +150,7 @@ public class Database {
 
 
         } catch (NullPointerException | IOException | SQLException ex) {
+            closeCon();
             System.out.println(ex.getMessage());
             return 0;
         }
@@ -166,7 +168,6 @@ public class Database {
                 "WHERE file_moving.dest_folder_id = destination_folder.dest_fold_id\n" +
                 "  AND file_moving.mff_id = moving_files_folder.mff_id";
         ResultSet results = statement.executeQuery(selectSql);
-        closeCon();
         return results;
     }
 
