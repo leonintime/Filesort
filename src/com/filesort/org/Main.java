@@ -21,17 +21,10 @@ public class Main {
     public static final String DB_CON = "jdbc:sqlite:db\\folders.db";
     public static boolean endProgram = false;
     private static int countRunAmount = 0;
-    private static Database db;
 
-    static {
-        try {
-            db = new Database(DB_CON);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+   
     public Main() {
+            
     }
 
     public static void main(String[] args) {
