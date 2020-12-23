@@ -23,6 +23,7 @@ public class Main {
     public static boolean endProgram = false;
     private static int countRunAmount = 0;
     private static Database db;
+    private static int test; 
 
 
     static {
