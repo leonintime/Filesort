@@ -1,7 +1,5 @@
 package com.filesort.org;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -14,8 +12,9 @@ public class Filesort {
     private final String fileFolder;
     private final String currentPath;
     private final String destinationPath;
-    private static final Scanner scanner = new Scanner(System.in);
-    private static Database db;
+    private static final Scanner SCANNER = new Scanner(System.in);
+    public static Database db;
+    private static final String[] FOLDER_OPTIONS = new String[] { "Moving files folders", "Destination folder" };
 
     static {
         try {
@@ -25,14 +24,12 @@ public class Filesort {
         }
     }
 
-
-    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) throws SQLException {
+    public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
         this.fileFolder = fileFolder;
         this.currentPath = currentPath;
         this.destinationPath = destinationPath;
         this.extension = extension;
         this.fileAmount = 0;
-
 
     }
 
@@ -50,9 +47,7 @@ public class Filesort {
             System.out.println("An error occurred while checking if the file folders exist.");
         }
 
-
     }
-
 
     private void checkEnvironmentVariables() {
 
@@ -60,12 +55,14 @@ public class Filesort {
             if (destinationPath == null || currentPath == null) {
 
                 if (destinationPath == null) {
-                    System.out.println("The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) " +
-                            "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
+                    System.out.println(
+                            "The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) "
+                                    + "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
 
                 } else if (currentPath == null) {
-                    System.out.println("The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.." +
-                            "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
+                    System.out.println(
+                            "The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.."
+                                    + "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
                 } else {
                     // Nothing
                 }
@@ -76,37 +73,36 @@ public class Filesort {
 
     }
 
-
-    public int moveFiles() {
-        try {
-            File folder = new File(fileFolder);
-            String[] files = folder.list();
-            assert files != null;
-            for (String file : files) {
-                for (int i = 0; i <= extension.length - 1; i++) {
-                    if (file.contains(extension[i])) {
-                        Files.move(Paths.get(currentPath + file),
-                                Paths.get(destinationPath + file));
-                        fileAmount++;
-                        System.out.println(file + " got successfully moved");
-                    }
-                }
-            }
-
-            return fileAmount;
-        } catch (NullPointerException | IOException ex) {
-            return 0;
-        }
-    }
+    // public int moveFiles() {
+    // try {
+    // File folder = new File(fileFolder);
+    // String[] files = folder.list();
+    // assert files != null;
+    // for (String file : files) {
+    // for (int i = 0; i <= extension.length - 1; i++) {
+    // if (file.contains(extension[i])) {
+    // Files.move(Paths.get(currentPath + file),
+    // Paths.get(destinationPath + file));
+    // fileAmount++;
+    // System.out.println(file + " got successfully moved");
+    // }
+    // }
+    // }
+    //
+    // return fileAmount;
+    // } catch (NullPointerException | IOException ex) {
+    // return 0;
+    // }
+    // }
 
     // Sums the found files from the download and the desktop
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
     }
 
-
     // Checks how many files got moved from one to another folder<
-    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType, int totalFilesMoved) {
+    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType,
+            int totalFilesMoved) {
 
         switch (fileType) {
 
@@ -132,7 +128,6 @@ public class Filesort {
                 }
                 break;
 
-
             case "pdf":
                 System.out.println("/// PDF FILES ///");
                 if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
@@ -143,7 +138,6 @@ public class Filesort {
                     System.out.println("Total pdf files moved: " + totalFilesMoved + "\n");
                 }
                 break;
-
 
             case "pictures":
                 System.out.println("/// PICTURES ///");
@@ -156,7 +150,6 @@ public class Filesort {
                 }
                 break;
 
-
             case "powerpoints":
                 System.out.println("/// POWERPOINT FILES ///");
                 if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
@@ -168,8 +161,10 @@ public class Filesort {
                 }
                 break;
 
-        }
+            default:
+                System.out.println("Couldn't find this file format");
 
+        }
 
     }
 
@@ -188,72 +183,242 @@ public class Filesort {
 
     public static void checkedOption() throws SQLException {
 
-        int selectedOption = scanner.nextInt();
-        boolean successfulInserted;
-        String pathValue;
-        String pathName;
+        int selectedOption = SCANNER.nextInt();
+        int selectedInnerOption;
+        boolean sqlSuccessful;
+        String path = null;
+        String folder = null;
+        int id = 0;
+        int optionCounter = 1;
+        int dest_fold_id = 0;
+        int mff_id = 0;
 
-        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path"
+        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path",
+        // "Exit"
         switch (selectedOption) {
             case 1:
                 Main.sortFiles();
                 break;
 
             case 2:
-                db.showPaths();
-                System.out.println("\n");
+                System.out.println("Would you like to see the destination folders or the moving files folders?");
+                optionCounter = 1;
+                for (String option : FOLDER_OPTIONS) {
+                    System.out.println(optionCounter + "." + option);
+                    optionCounter++;
+                }
+                selectedInnerOption = SCANNER.nextInt();
+                switch (selectedInnerOption) {
+                    case 1:
+                        db.showMovingFolders();
+                        System.out.println("\n");
+                        break;
+                    case 2:
+                        db.showDestinationFolders();
+                        System.out.println("\n");
+                        break;
+                }
                 break;
 
             case 3:
-                System.out.println("Type in the name for the path (My word files).");
-                pathName = scanner.next();
-                System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
-                pathValue = scanner.next();
 
-                try {
-                    successfulInserted = db.addPath(pathName, pathValue);
-                    if (successfulInserted) {
-                        System.out.println("Path got added");
-                    } else {
-                        System.out.println("Path couldn't get added");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                System.out.println("What kind of folder do you want to add? :");
+
+                for (String option : FOLDER_OPTIONS) {
+                    System.out.println(optionCounter + "." + option);
+                    optionCounter++;
                 }
+                selectedInnerOption = SCANNER.nextInt();
+                switch (selectedInnerOption) {
+                    case 1:
+                        System.out.println("Type in the name for the name for the folder");
+                        folder = SCANNER.next();
+                        System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
+                        path = SCANNER.next();
+
+                        try {
+                            sqlSuccessful = db.addMovingFilesFolder(folder, path);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got added");
+                            } else {
+                                System.out.println("Folder couldn't get added");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                    case 2:
+                        System.out.println("Type in the name for the folder");
+                        folder = SCANNER.next();
+                        System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
+                        path = SCANNER.next();
+
+                        try {
+                            sqlSuccessful = db.addDestinationFolder(folder, path);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got added");
+                            } else {
+                                System.out.println("Folder couldn't get added");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                }
+
                 break;
 
             case 4:
-                db.showPaths();
-                System.out.println("Type in the number for the path that you want to update");
-                int pathNumber = scanner.nextInt();
-                System.out.println("Type in the name for the path (My word files).");
-                pathName = scanner.nextLine();
+                System.out.println("What kind of folder do you want to update?");
 
-                System.out.println("Enter the value for the folder (C:\\foldername\\..).");
-                pathValue = scanner.nextLine();
+                for (String option : FOLDER_OPTIONS) {
+                    System.out.println(optionCounter + "." + option);
+                    optionCounter++;
+                }
+                selectedInnerOption = SCANNER.nextInt();
+                switch (selectedInnerOption) {
+                    case 1:
+                        try {
+                            System.out.println("Type in the number of the folder you want to edit");
+                            id = SCANNER.nextInt();
+                            System.out.println("Type in the name for the folder");
+                            folder = SCANNER.next();
+                            System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
+                            path = SCANNER.next();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
+                        try {
+                            sqlSuccessful = db.updateMovingFilesFolder(folder, path, id);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got updated");
+                            } else {
+                                System.out.println("Folder couldn't get updated");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                    case 2:
+                        System.out.println("Type in the number of the folder you want to edit");
+                        id = SCANNER.nextInt();
+                        System.out.println("Type in the name for the folder");
+                        folder = SCANNER.next();
+                        System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
+                        path = SCANNER.next();
+
+                        try {
+                            sqlSuccessful = db.updateDestinationFolder(folder, path, id);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got updated");
+                            } else {
+                                System.out.println("Folder couldn't get updated");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                }
+
+            case 5:
+                System.out.println("What kind of folder do you want to remove? :");
+
+                for (String option : FOLDER_OPTIONS) {
+                    System.out.println(optionCounter + "." + option);
+                    optionCounter++;
+                }
+                selectedInnerOption = SCANNER.nextInt();
+                switch (selectedInnerOption) {
+                    case 1:
+                        try {
+                            System.out.println("Type in the number of the folder you want to remove");
+                            id = SCANNER.nextInt();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            sqlSuccessful = db.deleteMovingFilesFolder(id);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got removed");
+                            } else {
+                                System.out.println("Folder couldn't get removed");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                    case 2:
+                        try {
+                            System.out.println("Type in the number of the folder you want to remove");
+                            id = SCANNER.nextInt();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            sqlSuccessful = db.deleteDestinationFolder(id);
+                            if (sqlSuccessful) {
+                                System.out.println("Folder got removed");
+                            } else {
+                                System.out.println("Folder couldn't get removed");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("\n");
+                        break;
+                }
+
+            case 6:
+                System.out.println("Destination folders: ");
+                db.getAllDestinationFolderIds();
+                System.out.println("\n");
+                System.out.println("Moving file folders: ");
+                db.getAllMovingFolderIds();
+
+                System.out.println(" Number of the folder where the files are supposed to be moved away from");
                 try {
-                    successfulInserted = db.updatePath(pathName, pathValue, pathNumber);
-                    if (successfulInserted) {
-                        System.out.println("Path got added");
-                    } else {
-                        System.out.println("Path couldn't get added");
+                    if (SCANNER.hasNextInt()) {
+                        mff_id = SCANNER.nextInt();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                System.out.println("Number of the folder where the files are supposed to be moved to");
+
+                try {
+                    if (SCANNER.hasNextInt()) {
+                        dest_fold_id = SCANNER.nextInt();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    sqlSuccessful = db.connectFolders(mff_id, dest_fold_id);
+                    if (sqlSuccessful) {
+                        System.out.println("Folders got connected");
+                    } else {
+                        System.out.println("Folders couldn't get connected");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("\n");
                 break;
 
-            case 5:
-                break;
-            case 6:
+            case 7:
                 Main.endProgram = true;
                 break;
             default:
-
+                System.out.println("Sorry, there is no such option.");
         }
     }
 }
-
-
-
