@@ -14,8 +14,7 @@ public class Filesort {
     private final String destinationPath;
     private static final Scanner SCANNER = new Scanner(System.in);
     public static Database db;
-    private static final String[] FOLDER_OPTIONS = new String[]{"Moving files folders", "Destination folder"};
-
+    private static final String[] FOLDER_OPTIONS = new String[] { "Moving files folders", "Destination folder" };
 
     static {
         try {
@@ -24,7 +23,6 @@ public class Filesort {
             e.printStackTrace();
         }
     }
-
 
     public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
         this.fileFolder = fileFolder;
@@ -49,9 +47,7 @@ public class Filesort {
             System.out.println("An error occurred while checking if the file folders exist.");
         }
 
-
     }
-
 
     private void checkEnvironmentVariables() {
 
@@ -59,12 +55,14 @@ public class Filesort {
             if (destinationPath == null || currentPath == null) {
 
                 if (destinationPath == null) {
-                    System.out.println("The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) " +
-                            "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
+                    System.out.println(
+                            "The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) "
+                                    + "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
 
                 } else if (currentPath == null) {
-                    System.out.println("The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.." +
-                            "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
+                    System.out.println(
+                            "The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.."
+                                    + "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
                 } else {
                     // Nothing
                 }
@@ -75,37 +73,36 @@ public class Filesort {
 
     }
 
-
-//    public int moveFiles() {
-//        try {
-//            File folder = new File(fileFolder);
-//            String[] files = folder.list();
-//            assert files != null;
-//            for (String file : files) {
-//                for (int i = 0; i <= extension.length - 1; i++) {
-//                    if (file.contains(extension[i])) {
-//                        Files.move(Paths.get(currentPath + file),
-//                                Paths.get(destinationPath + file));
-//                        fileAmount++;
-//                        System.out.println(file + " got successfully moved");
-//                    }
-//                }
-//            }
-//
-//            return fileAmount;
-//        } catch (NullPointerException | IOException ex) {
-//            return 0;
-//        }
-//    }
+    // public int moveFiles() {
+    // try {
+    // File folder = new File(fileFolder);
+    // String[] files = folder.list();
+    // assert files != null;
+    // for (String file : files) {
+    // for (int i = 0; i <= extension.length - 1; i++) {
+    // if (file.contains(extension[i])) {
+    // Files.move(Paths.get(currentPath + file),
+    // Paths.get(destinationPath + file));
+    // fileAmount++;
+    // System.out.println(file + " got successfully moved");
+    // }
+    // }
+    // }
+    //
+    // return fileAmount;
+    // } catch (NullPointerException | IOException ex) {
+    // return 0;
+    // }
+    // }
 
     // Sums the found files from the download and the desktop
     public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
     }
 
-
     // Checks how many files got moved from one to another folder<
-    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType, int totalFilesMoved) {
+    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType,
+            int totalFilesMoved) {
 
         switch (fileType) {
 
@@ -131,7 +128,6 @@ public class Filesort {
                 }
                 break;
 
-
             case "pdf":
                 System.out.println("/// PDF FILES ///");
                 if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
@@ -142,7 +138,6 @@ public class Filesort {
                     System.out.println("Total pdf files moved: " + totalFilesMoved + "\n");
                 }
                 break;
-
 
             case "pictures":
                 System.out.println("/// PICTURES ///");
@@ -155,7 +150,6 @@ public class Filesort {
                 }
                 break;
 
-
             case "powerpoints":
                 System.out.println("/// POWERPOINT FILES ///");
                 if (filesCountedDownload <= 0 && filesCountedDesktop <= 0) {
@@ -167,12 +161,10 @@ public class Filesort {
                 }
                 break;
 
-
             default:
                 System.out.println("Couldn't find this file format");
 
         }
-
 
     }
 
@@ -201,8 +193,8 @@ public class Filesort {
         int dest_fold_id = 0;
         int mff_id = 0;
 
-
-        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path", "Exit"
+        // "Sort files", "Show all paths", "Add path", "Update path ", "Delete path",
+        // "Exit"
         switch (selectedOption) {
             case 1:
                 Main.sortFiles();
@@ -384,7 +376,6 @@ public class Filesort {
                         break;
                 }
 
-
             case 6:
                 System.out.println("Destination folders: ");
                 db.getAllDestinationFolderIds();
@@ -410,7 +401,6 @@ public class Filesort {
                     e.printStackTrace();
                 }
 
-
                 try {
                     sqlSuccessful = db.connectFolders(mff_id, dest_fold_id);
                     if (sqlSuccessful) {
@@ -424,7 +414,6 @@ public class Filesort {
                 System.out.println("\n");
                 break;
 
-
             case 7:
                 Main.endProgram = true;
                 break;
@@ -433,9 +422,3 @@ public class Filesort {
         }
     }
 }
-
-
-
-
-
-
