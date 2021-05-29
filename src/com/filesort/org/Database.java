@@ -126,20 +126,19 @@ public class Database {
                     extensionList.add((String) extensions.getObject("file_ext_ext"));
                 }
 
-           
 
                 assert destFolderPath != null;
                 File folder = new File(moveFromFolder);
                 String[] files = folder.list();
                 assert files != null;
-                for (String file : files) {
-                    for (int i = 0; i < extensionList.size(); i++) {
-                        if (file.contains(extensionList.get(i))) {
-                            Files.move(Paths.get(moveFromFolder + file), Paths.get(destFolderPath + file));
-                            fileAmount++;
-                            System.out.println(file + " got successfully moved");
-                        }
-                    }
+                 for (String file : files) {
+                     for (String extension : extensionList) {
+                         if (file.contains(extension)) {
+                             Files.move(Paths.get(moveFromFolder + file), Paths.get(destFolderPath + file));
+                             fileAmount++;
+                             System.out.println(file + " got successfully moved");
+                         }
+                     }
                 }
                 closeCon();
             }
