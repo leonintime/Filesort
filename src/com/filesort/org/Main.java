@@ -67,12 +67,12 @@ public class Main {
 
 
         // Files on the desktop folder are getting moved to the destination folder
-        int wordFilesCountedDesktop = Filesort.db.moveFiles();
+        // int wordFilesCountedDesktop = Filesort.db.moveFiles();
 
 
         // Desktop and download files are added together to calculate the total amount
-        int totalWordFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(wordFilesCountedDownload,
-                wordFilesCountedDesktop);
+        //  int totalWordFilesMoved = sortWordFilesDownload.calcTotalFilesMoved(wordFilesCountedDownload,
+        //       wordFilesCountedDesktop);
 
 
 //        sortWordFilesDesktop.checkFilesMoved(wordFilesCountedDownload, wordFilesCountedDesktop, "word",
