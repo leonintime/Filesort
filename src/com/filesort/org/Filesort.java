@@ -14,7 +14,7 @@ public class Filesort {
     private final String destinationPath;
     private static final Scanner SCANNER = new Scanner(System.in);
     public static Database db;
-    private static final String[] FOLDER_OPTIONS = new String[] { "Moving files folders", "Destination folder" };
+    private static final String[] FOLDER_OPTIONS = new String[]{"Moving files folders", "Destination folder"};
 
     static {
         try {
@@ -34,7 +34,7 @@ public class Filesort {
     }
 
     // Checks if the folders got created on the desktop
-    public void checkFoldersExist() {
+    public void CheckFoldersExist() {
         try {
             if (Files.exists(Paths.get(destinationPath))) {
                 // Nothing
@@ -49,58 +49,36 @@ public class Filesort {
 
     }
 
-    private void checkEnvironmentVariables() {
-
-        try {
-            if (destinationPath == null || currentPath == null) {
-
-                if (destinationPath == null) {
-                    System.out.println(
-                            "The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) "
-                                    + "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
-
-                } else {
-                    System.out.println(
-                            "The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.."
-                                    + "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
-                }
-            }
-        } catch (Exception ex) {
-            System.out.println("An error occurred while checking if the environment variables exist.");
-        }
-
-    }
-
-    // public int moveFiles() {
-    // try {
-    // File folder = new File(fileFolder);
-    // String[] files = folder.list();
-    // assert files != null;
-    // for (String file : files) {
-    // for (int i = 0; i <= extension.length - 1; i++) {
-    // if (file.contains(extension[i])) {
-    // Files.move(Paths.get(currentPath + file),
-    // Paths.get(destinationPath + file));
-    // fileAmount++;
-    // System.out.println(file + " got successfully moved");
-    // }
-    // }
-    // }
-    //
-    // return fileAmount;
-    // } catch (NullPointerException | IOException ex) {
-    // return 0;
-    // }
-    // }
+//    private void checkEnvironmentVariables() {
+//
+//        try {
+//            if (destinationPath == null || currentPath == null) {
+//
+//                if (destinationPath == null) {
+//                    System.out.println(
+//                            "The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) "
+//                                    + "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
+//
+//                } else {
+//                    System.out.println(
+//                            "The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.."
+//                                    + "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
+//                }
+//            }
+//        } catch (Exception ex) {
+//            System.out.println("An error occurred while checking if the environment variables exist.");
+//        }
+//
+//    }
 
     // Sums the found files from the download and the desktop
-    public int calcTotalFilesMoved(int filesDownload, int filesDesktop) {
+    public int CalcTotalFilesMoved(int filesDownload, int filesDesktop) {
         return filesDesktop + filesDownload;
     }
 
-    // Checks how many files got moved from one to another folder<
-    public void checkFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType,
-            int totalFilesMoved) {
+    // Checks how many files got moved from one to another folder
+    public void CheckFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType,
+                                int totalFilesMoved) {
 
         switch (fileType) {
 
@@ -111,8 +89,8 @@ public class Filesort {
 
     }
 
-    public static void showOptions(String[] options) {
-        System.out.println("Choose one of the options below:");
+    public static void ShowOptions(String[] options) {
+        System.out.println("\nChoose one of the options below:");
         int temp = 0;
         try {
             for (int i = 0; i <= options.length - 1; i++) {
@@ -124,7 +102,7 @@ public class Filesort {
         }
     }
 
-    public static void checkedOption() throws SQLException {
+    public static void CheckedOption() throws SQLException {
 
         int selectedOption = SCANNER.nextInt();
         int selectedInnerOption;
@@ -140,7 +118,7 @@ public class Filesort {
         // "Exit"
         switch (selectedOption) {
             case 1:
-                Main.sortFiles();
+                Main.SortFiles();
                 break;
 
             case 2:
@@ -153,11 +131,11 @@ public class Filesort {
                 selectedInnerOption = SCANNER.nextInt();
                 switch (selectedInnerOption) {
                     case 1:
-                        db.showMovingFolders();
+                        db.ShowMovingFolders();
                         System.out.println("\n");
                         break;
                     case 2:
-                        db.showDestinationFolders();
+                        db.ShowDestinationFolders();
                         System.out.println("\n");
                         break;
                 }
@@ -180,7 +158,7 @@ public class Filesort {
                         path = SCANNER.next();
 
                         try {
-                            sqlSuccessful = db.addMovingFilesFolder(folder, path);
+                            sqlSuccessful = db.AddMovingFilesFolder(folder, path);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got added");
                             } else {
@@ -198,7 +176,7 @@ public class Filesort {
                         path = SCANNER.next();
 
                         try {
-                            sqlSuccessful = db.addDestinationFolder(folder, path);
+                            sqlSuccessful = db.AddDestinationFolder(folder, path);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got added");
                             } else {
@@ -235,7 +213,7 @@ public class Filesort {
                         }
 
                         try {
-                            sqlSuccessful = db.updateMovingFilesFolder(folder, path, id);
+                            sqlSuccessful = db.UpdateMovingFilesFolder(folder, path, id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got updated");
                             } else {
@@ -255,7 +233,7 @@ public class Filesort {
                         path = SCANNER.next();
 
                         try {
-                            sqlSuccessful = db.updateDestinationFolder(folder, path, id);
+                            sqlSuccessful = db.UpdateDestinationFolder(folder, path, id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got updated");
                             } else {
@@ -286,7 +264,7 @@ public class Filesort {
                         }
 
                         try {
-                            sqlSuccessful = db.deleteMovingFilesFolder(id);
+                            sqlSuccessful = db.DeleteMovingFilesFolder(id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got removed");
                             } else {
@@ -306,7 +284,7 @@ public class Filesort {
                         }
 
                         try {
-                            sqlSuccessful = db.deleteDestinationFolder(id);
+                            sqlSuccessful = db.DeleteDestinationFolder(id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got removed");
                             } else {
@@ -321,10 +299,10 @@ public class Filesort {
 
             case 6:
                 System.out.println("Destination folders: ");
-                db.getAllDestinationFolderIds();
+                db.GetAllDestinationFolderIds();
                 System.out.println("\n");
                 System.out.println("Moving file folders: ");
-                db.getAllMovingFolderIds();
+                db.GetAllMovingFolderIds();
 
                 System.out.println(" Number of the folder where the files are supposed to be moved away from");
                 try {
@@ -345,7 +323,7 @@ public class Filesort {
                 }
 
                 try {
-                    sqlSuccessful = db.connectFolders(mff_id, dest_fold_id);
+                    sqlSuccessful = db.ConnectFolders(mff_id, dest_fold_id);
                     if (sqlSuccessful) {
                         System.out.println("Folders got connected");
                     } else {
