@@ -32,13 +32,11 @@ public class Database {
     public static final String UPDATE = "UPDATE ";
     public static final String SET = " SET ";
 
-
     // TABLES
     public static final String DESTINATION_FOLDER = "destination_folder";
     public static final String FILE_EXTENSIONS = "file_extensions";
     public static final String FILE_MOVING = "file_moving";
     public static final String MOVING_FILES_FOLDER = "moving_files_folder";
-
 
     // COLUMNS
 
@@ -61,30 +59,37 @@ public class Database {
     public static final String MFF_MFF_NAME = "mff_name";
     public static final String MFF_MFF_PATH = "mff_path";
 
-
     // SQL STATEMENTS
-    public static String SELECT_DESTINATION_FOLDER = SELECT + DF_DEST_FOLD_ID + SEPARATOR + SPACE + DF_DEST_FOLD_NAME + SEPARATOR + SPACE + DF_DEST_FOLD_PATH + FROM + DESTINATION_FOLDER;
-    public static String SELECT_MOVING_FILES_FOLDER = SELECT + MFF_MFF_ID + SEPARATOR + MFF_MFF_NAME + SEPARATOR + MFF_MFF_PATH + FROM + MOVING_FILES_FOLDER;
-    public static String SELECT_ALL_MOVING_FOLDER_IDS = SELECT + MFF_MFF_ID + SEPARATOR + MFF_MFF_PATH + FROM + MOVING_FILES_FOLDER;
-    public static String SELECT_ALL_DESTINATION_FOLDER_IDS = SELECT + DF_DEST_FOLD_ID + SEPARATOR + DF_DEST_FOLD_PATH + FROM + DESTINATION_FOLDER;
-    public static String SELECT_CONNECTED_FOLDERS = SELECT + DISTINCT + MOVING_FILES_FOLDER + DOT + MFF_MFF_NAME + SEPARATOR + SPACE + MOVING_FILES_FOLDER + DOT +
-            MFF_MFF_PATH + SEPARATOR + SPACE + DF_DEST_FOLD_NAME + SEPARATOR + SPACE + MOVING_FILES_FOLDER + DOT + MFF_MFF_ID + SEPARATOR + SPACE + DF_DEST_FOLD_PATH + SEPARATOR + SPACE + DF_DEST_FOLD_ID + FROM +
-            FILE_MOVING + SEPARATOR + SPACE + DESTINATION_FOLDER + SEPARATOR + SPACE + FILE_EXTENSIONS + SEPARATOR + SPACE + MOVING_FILES_FOLDER + WHERE + FILE_MOVING + DOT +
-            FM_DEST_FOLDER_ID + EQUALS + DESTINATION_FOLDER + DOT + DF_DEST_FOLD_ID + AND + FILE_MOVING + DOT + FM_MFF_ID + EQUALS + MOVING_FILES_FOLDER +
-            DOT + MFF_MFF_ID;
-    public static String SELECT_CONNECTED_FOLDER_EXTENSIONS = SELECT + DISTINCT + DF_DEST_FOLD_NAME + SEPARATOR + SPACE + FE_FILE_EXT_EXT + FROM + FILE_MOVING + SEPARATOR + SPACE + DESTINATION_FOLDER + SEPARATOR +
-            FILE_EXTENSIONS + SEPARATOR + SPACE + MOVING_FILES_FOLDER + WHERE + FILE_MOVING + DOT + FM_DEST_FOLDER_ID + EQUALS + DESTINATION_FOLDER + DOT + DF_DEST_FOLD_ID + AND + FILE_MOVING + DOT + FM_MFF_ID +
-            EQUALS + MOVING_FILES_FOLDER + DOT + MFF_MFF_ID + AND + FILE_EXTENSIONS + DOT + FE_DEST_FOLDER_ID + EQUALS + DESTINATION_FOLDER + DOT + DF_DEST_FOLD_ID + AND + FILE_MOVING + DOT + FM_DEST_FOLDER_ID +
-            EQUALS;
+    public static String SELECT_DESTINATION_FOLDER = SELECT + DF_DEST_FOLD_ID + SEPARATOR + SPACE + DF_DEST_FOLD_NAME
+            + SEPARATOR + SPACE + DF_DEST_FOLD_PATH + FROM + DESTINATION_FOLDER;
+    public static String SELECT_MOVING_FILES_FOLDER = SELECT + MFF_MFF_ID + SEPARATOR + MFF_MFF_NAME + SEPARATOR
+            + MFF_MFF_PATH + FROM + MOVING_FILES_FOLDER;
+    public static String SELECT_ALL_MOVING_FOLDER_IDS = SELECT + MFF_MFF_ID + SEPARATOR + MFF_MFF_PATH + FROM
+            + MOVING_FILES_FOLDER;
+    public static String SELECT_ALL_DESTINATION_FOLDER_IDS = SELECT + DF_DEST_FOLD_ID + SEPARATOR + DF_DEST_FOLD_PATH
+            + FROM + DESTINATION_FOLDER;
+    public static String SELECT_CONNECTED_FOLDERS = SELECT + DISTINCT + MOVING_FILES_FOLDER + DOT + MFF_MFF_NAME
+            + SEPARATOR + SPACE + MOVING_FILES_FOLDER + DOT + MFF_MFF_PATH + SEPARATOR + SPACE + DF_DEST_FOLD_NAME
+            + SEPARATOR + SPACE + MOVING_FILES_FOLDER + DOT + MFF_MFF_ID + SEPARATOR + SPACE + DF_DEST_FOLD_PATH
+            + SEPARATOR + SPACE + DF_DEST_FOLD_ID + FROM + FILE_MOVING + SEPARATOR + SPACE + DESTINATION_FOLDER
+            + SEPARATOR + SPACE + FILE_EXTENSIONS + SEPARATOR + SPACE + MOVING_FILES_FOLDER + WHERE + FILE_MOVING + DOT
+            + FM_DEST_FOLDER_ID + EQUALS + DESTINATION_FOLDER + DOT + DF_DEST_FOLD_ID + AND + FILE_MOVING + DOT
+            + FM_MFF_ID + EQUALS + MOVING_FILES_FOLDER + DOT + MFF_MFF_ID;
+    public static String SELECT_CONNECTED_FOLDER_EXTENSIONS = SELECT + DISTINCT + DF_DEST_FOLD_NAME + SEPARATOR + SPACE
+            + FE_FILE_EXT_EXT + FROM + FILE_MOVING + SEPARATOR + SPACE + DESTINATION_FOLDER + SEPARATOR
+            + FILE_EXTENSIONS + SEPARATOR + SPACE + MOVING_FILES_FOLDER + WHERE + FILE_MOVING + DOT + FM_DEST_FOLDER_ID
+            + EQUALS + DESTINATION_FOLDER + DOT + DF_DEST_FOLD_ID + AND + FILE_MOVING + DOT + FM_MFF_ID + EQUALS
+            + MOVING_FILES_FOLDER + DOT + MFF_MFF_ID + AND + FILE_EXTENSIONS + DOT + FE_DEST_FOLDER_ID + EQUALS
+            + DESTINATION_FOLDER + DOT + DF_DEST_FOLD_ID + AND + FILE_MOVING + DOT + FM_DEST_FOLDER_ID + EQUALS;
 
-    public static String INSERT_INTO_MOVING_FILES_FOLDER = INSERT_INTO + MOVING_FILES_FOLDER + LEFT_BRACKET + MFF_MFF_NAME + SEPARATOR + SPACE + MFF_MFF_PATH + RIGHT_BRACKET + VALUES;
-
+    public static String INSERT_INTO_MOVING_FILES_FOLDER = INSERT_INTO + MOVING_FILES_FOLDER + LEFT_BRACKET
+            + MFF_MFF_NAME + SEPARATOR + SPACE + MFF_MFF_PATH + RIGHT_BRACKET + VALUES;
 
     public static String UPDATE_MOVING_FILES_FOLDER = UPDATE + MOVING_FILES_FOLDER + SET;
 
-//    String sql = "UPDATE moving_files_folder SET mff_name = '" + folder + "', mff_path = '" + path
-//            + "' WHERE mff_id = " + id + " ";
-
+    // String sql = "UPDATE moving_files_folder SET mff_name = '" + folder + "',
+    // mff_path = '" + path
+    // + "' WHERE mff_id = " + id + " ";
 
     public Database(String DB_CON) throws SQLException {
         Database.DB_CON = DB_CON;
@@ -184,7 +189,6 @@ public class Database {
 
         try {
 
-
             ResultSet results = GetConnectedFolders();
             while (results.next()) {
                 // Powerpoint, word etc
@@ -196,9 +200,7 @@ public class Database {
 
             recordAmount = destFolderIds.size();
 
-
             while (recordAmount > loopCounter) {
-
 
                 currentDestFolderPath = "";
                 currentMoveFromFolder = "";
@@ -217,7 +219,8 @@ public class Database {
                 for (String file : files) {
                     for (String extension : extensionList) {
                         if (file.contains(extension)) {
-                            Files.move(Paths.get(currentMoveFromFolder + file), Paths.get(currentDestFolderPath + file));
+                            Files.move(Paths.get(currentMoveFromFolder + file),
+                                    Paths.get(currentDestFolderPath + file));
                             fileAmount++;
                             System.out.println(file + " -> " + currentDestFolderPath);
                         }
@@ -226,7 +229,6 @@ public class Database {
                 extensionList.clear();
                 loopCounter++;
             }
-
 
         } catch (NullPointerException | IOException | SQLException ex) {
             CloseCon();
@@ -251,8 +253,9 @@ public class Database {
 
         try {
             OpenCon();
-            INSERT_SQL = INSERT_INTO_MOVING_FILES_FOLDER + LEFT_BRACKET + SINGLE_QUOTATION_MARK + folder + SINGLE_QUOTATION_MARK + SEPARATOR + SPACE +
-                    SINGLE_QUOTATION_MARK + path + SINGLE_QUOTATION_MARK + RIGHT_BRACKET;
+            INSERT_SQL = INSERT_INTO_MOVING_FILES_FOLDER + LEFT_BRACKET + SINGLE_QUOTATION_MARK + folder
+                    + SINGLE_QUOTATION_MARK + SEPARATOR + SPACE + SINGLE_QUOTATION_MARK + path + SINGLE_QUOTATION_MARK
+                    + RIGHT_BRACKET;
             statement = conn.createStatement();
             statement.execute(INSERT_SQL);
             CloseCon();
@@ -268,8 +271,9 @@ public class Database {
 
         try {
             OpenCon();
-            UPDATE_SQL = UPDATE_MOVING_FILES_FOLDER + MFF_MFF_NAME + EQUALS + SINGLE_QUOTATION_MARK + folder + SINGLE_QUOTATION_MARK + SEPARATOR + SPACE +
-                    MFF_MFF_PATH + EQUALS + SINGLE_QUOTATION_MARK + path + SINGLE_QUOTATION_MARK + WHERE + MFF_MFF_ID + EQUALS + id;
+            UPDATE_SQL = UPDATE_MOVING_FILES_FOLDER + MFF_MFF_NAME + EQUALS + SINGLE_QUOTATION_MARK + folder
+                    + SINGLE_QUOTATION_MARK + SEPARATOR + SPACE + MFF_MFF_PATH + EQUALS + SINGLE_QUOTATION_MARK + path
+                    + SINGLE_QUOTATION_MARK + WHERE + MFF_MFF_ID + EQUALS + id;
             statement = conn.createStatement();
             statement.execute(UPDATE_SQL);
             CloseCon();

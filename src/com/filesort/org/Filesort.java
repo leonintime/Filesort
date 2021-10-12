@@ -14,7 +14,7 @@ public class Filesort {
     private final String destinationPath;
     private static final Scanner SCANNER = new Scanner(System.in);
     public static Database db;
-    private static final String[] FOLDER_OPTIONS = new String[]{"Moving files folders", "Destination folder"};
+    private static final String[] FOLDER_OPTIONS = new String[] { "Moving files folders", "Destination folder" };
 
     static {
         try {
@@ -49,27 +49,32 @@ public class Filesort {
 
     }
 
-//    private void checkEnvironmentVariables() {
-//
-//        try {
-//            if (destinationPath == null || currentPath == null) {
-//
-//                if (destinationPath == null) {
-//                    System.out.println(
-//                            "The environment variable for the destined folder needs to be set in the system properties.(Folder for Word files) "
-//                                    + "\nFor example: Word_files = C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
-//
-//                } else {
-//                    System.out.println(
-//                            "The environment variable for the folder where the files are supposed to be moved away from needs to be set in the system properties.."
-//                                    + "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and (Download_folder = C:\\Users\\YourAccount\\Download\\)");
-//                }
-//            }
-//        } catch (Exception ex) {
-//            System.out.println("An error occurred while checking if the environment variables exist.");
-//        }
-//
-//    }
+    // private void checkEnvironmentVariables() {
+    //
+    // try {
+    // if (destinationPath == null || currentPath == null) {
+    //
+    // if (destinationPath == null) {
+    // System.out.println(
+    // "The environment variable for the destined folder needs to be set in the
+    // system properties.(Folder for Word files) "
+    // + "\nFor example: Word_files =
+    // C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
+    //
+    // } else {
+    // System.out.println(
+    // "The environment variable for the folder where the files are supposed to be
+    // moved away from needs to be set in the system properties.."
+    // + "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and
+    // (Download_folder = C:\\Users\\YourAccount\\Download\\)");
+    // }
+    // }
+    // } catch (Exception ex) {
+    // System.out.println("An error occurred while checking if the environment
+    // variables exist.");
+    // }
+    //
+    // }
 
     // Sums the found files from the download and the desktop
     public int CalcTotalFilesMoved(int filesDownload, int filesDesktop) {
@@ -78,7 +83,7 @@ public class Filesort {
 
     // Checks how many files got moved from one to another folder
     public void CheckFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType,
-                                int totalFilesMoved) {
+            int totalFilesMoved) {
 
         switch (fileType) {
 

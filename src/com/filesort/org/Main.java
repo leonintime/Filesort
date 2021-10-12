@@ -4,12 +4,11 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String[] OPTIONS = new String[]{"Sort files", "Show paths", "Add path", "Update path ",
-            "Delete path", "Connect moving files folder with destination folder", "End program"};
+    private static final String[] OPTIONS = new String[] { "Sort files", "Show paths", "Add path", "Update path ",
+            "Delete path", "Connect moving files folder with destination folder", "End program" };
     public static final String DB_CON = "jdbc:sqlite:db\\folders.db";
     public static boolean endProgram = false;
     private static int countRunAmount = 0;
-
 
     public Main() {
 
@@ -46,7 +45,6 @@ public class Main {
 
         // Files in download folder are getting moved to the destination folder
         Filesort.db.MoveFiles();
-
 
     }
 
