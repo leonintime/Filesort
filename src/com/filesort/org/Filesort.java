@@ -30,6 +30,7 @@ public class Filesort {
         this.destinationPath = destinationPath;
         this.extension = extension;
         this.fileAmount = 0;
+        // CheckFoldersExist();
 
     }
 
@@ -45,51 +46,6 @@ public class Filesort {
             }
         } catch (Exception ex) {
             System.out.println("An error occurred while checking if the file folders exist.");
-        }
-
-    }
-
-    // private void checkEnvironmentVariables() {
-    //
-    // try {
-    // if (destinationPath == null || currentPath == null) {
-    //
-    // if (destinationPath == null) {
-    // System.out.println(
-    // "The environment variable for the destined folder needs to be set in the
-    // system properties.(Folder for Word files) "
-    // + "\nFor example: Word_files =
-    // C:\\Users\\YourAccount\\Desktop\\Word_documents\\");
-    //
-    // } else {
-    // System.out.println(
-    // "The environment variable for the folder where the files are supposed to be
-    // moved away from needs to be set in the system properties.."
-    // + "\n For example: (Desktop = C:\\Users\\YourAccount\\Desktop\\) and
-    // (Download_folder = C:\\Users\\YourAccount\\Download\\)");
-    // }
-    // }
-    // } catch (Exception ex) {
-    // System.out.println("An error occurred while checking if the environment
-    // variables exist.");
-    // }
-    //
-    // }
-
-    // Sums the found files from the download and the desktop
-    public int CalcTotalFilesMoved(int filesDownload, int filesDesktop) {
-        return filesDesktop + filesDownload;
-    }
-
-    // Checks how many files got moved from one to another folder
-    public void CheckFilesMoved(int filesCountedDownload, int filesCountedDesktop, String fileType,
-            int totalFilesMoved) {
-
-        switch (fileType) {
-
-            default:
-                System.out.println("Couldn't find this file format");
-
         }
 
     }
@@ -341,6 +297,38 @@ public class Filesort {
                 break;
 
             case 7:
+                System.out.println("Destination folders: ");
+                db.GetAllDestinationFolderIds();
+                System.out.println("\n");
+                System.out.println("Moving file folders: ");
+                db.GetAllMovingFolderIds();
+
+                System.out.println("Number of destination folder you want to connect an extension to");
+                try {
+                    if (SCANNER.hasNextInt()) {
+                        dest_fold_id = SCANNER.nextInt();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("Now enter the extension (.pptx for example) ");
+                String extension = SCANNER.next();
+                try {
+                    sqlSuccessful = db.ConnectExtentionToFolder(dest_fold_id, extension);
+                    if (sqlSuccessful) {
+                        System.out.println("Folder got connected");
+                    } else {
+                        System.out.println("Folder couldn't get connected");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("\n");
+
+                break;
+
+            case 8:
                 Main.endProgram = true;
                 break;
             default:

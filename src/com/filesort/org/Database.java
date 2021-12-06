@@ -198,6 +198,20 @@ public class Database {
                 movingFilePathIds.add((Integer) results.getObject(MFF_MFF_ID));
             }
 
+            if (isArrayListSizeAboveZero(destFolderPaths)) {
+
+            } else {
+                System.out.println(
+                        "There are no destination folders set yet, please go to the menu and add folders you want to move files to.");
+            }
+
+            if (isArrayListSizeAboveZero(movingFilePaths)) {
+
+            } else {
+                System.out.println(
+                        "There are no moving file folders set yet, please go to the menu and add folders you want to move files from (desktop, download folder).");
+            }
+
             recordAmount = destFolderIds.size();
 
             while (recordAmount > loopCounter) {
@@ -247,6 +261,11 @@ public class Database {
         SELECT_SQL = SELECT_CONNECTED_FOLDER_EXTENSIONS + id;
 
         return statement.executeQuery(SELECT_SQL);
+    }
+
+    private boolean isArrayListSizeAboveZero(ArrayList<String> arrayList) {
+
+        return arrayList.size() > 0 && arrayList != null;
     }
 
     public boolean AddMovingFilesFolder(String folder, String path) {
@@ -357,6 +376,23 @@ public class Database {
             OpenCon();
             String sql = "INSERT INTO file_moving (dest_folder_id, mff_id) VALUES (" + dest_folder_id + " , " + mff_id
                     + ")";
+            statement = conn.createStatement();
+            statement.execute(sql);
+            CloseCon();
+            return true;
+        } catch (SQLException e) {
+            CloseCon();
+            e.getMessage();
+            return false;
+        }
+    }
+
+    public boolean ConnectExtentionToFolder(int dest_fold_id, String extension) {
+
+        try {
+            OpenCon();
+            String sql = "INSERT INTO file_extensions (file_ext_ext, dest_folder_id) VALUES ('" + extension + "'  ,"
+                    + dest_fold_id + ")";
             statement = conn.createStatement();
             statement.execute(sql);
             CloseCon();

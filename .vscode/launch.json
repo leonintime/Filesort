@@ -9,6 +9,13 @@
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "com.filesort.org.Main",
+            "projectName": "Filesort_8f9c2d40"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "com.filesort.org.Main",
             "projectName": "Filesort_a1062803"
         },
         {

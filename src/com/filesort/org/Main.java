@@ -5,7 +5,7 @@ import java.sql.SQLException;
 public class Main {
 
     private static final String[] OPTIONS = new String[] { "Sort files", "Show paths", "Add path", "Update path ",
-            "Delete path", "Connect moving files folder with destination folder", "End program" };
+            "Delete path", "Connect moving files folder with destination folder","Connect extension with destination folder", "End program" };
     public static final String DB_CON = "jdbc:sqlite:db\\folders.db";
     public static boolean endProgram = false;
     private static int countRunAmount = 0;
@@ -20,7 +20,7 @@ public class Main {
 
             if (countRunAmount < 1) {
                 System.out.println("Searching for files...");
-                System.out.println("FILE LOG:");
+                System.out.println("Moving Files:");
                 try {
                     SortFiles();
 
