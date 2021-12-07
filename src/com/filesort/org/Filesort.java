@@ -300,8 +300,6 @@ public class Filesort {
                 System.out.println("Destination folders: ");
                 db.GetAllDestinationFolderIds();
                 System.out.println("\n");
-                System.out.println("Moving file folders: ");
-                db.GetAllMovingFolderIds();
 
                 System.out.println("Number of destination folder you want to connect an extension to");
                 try {
