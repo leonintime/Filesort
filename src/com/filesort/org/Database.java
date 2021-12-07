@@ -91,10 +91,21 @@ public class Database {
     // mff_path = '" + path
     // + "' WHERE mff_id = " + id + " ";
 
+    private boolean noDestinationFolder;
+    private boolean noMoveFolder;
+
     public Database(String DB_CON) throws SQLException {
         Database.DB_CON = DB_CON;
         conn = DriverManager.getConnection(DB_CON);
         this.statement = conn.createStatement();
+    }
+
+    private boolean getNoDestinationFolder() {
+        return noDestinationFolder;
+    }
+
+    private void setNoDestinationFolder(boolean noDestinationFolder) {
+        this.noDestinationFolder = noDestinationFolder;
     }
 
     private void OpenCon() throws SQLException {
@@ -185,6 +196,7 @@ public class Database {
         ArrayList<Integer> movingFilePathIds = new ArrayList<>();
         int recordAmount;
         int loopCounter = 0;
+
         ResultSet extensions;
 
         try {
@@ -198,18 +210,20 @@ public class Database {
                 movingFilePathIds.add((Integer) results.getObject(MFF_MFF_ID));
             }
 
-            if (isArrayListSizeAboveZero(destFolderPaths)) {
+            if (isArrayListSizeAboveZero(destFolderPaths) && isArrayListSizeAboveZero(movingFilePaths)) {
 
             } else {
                 System.out.println(
                         "There are no destination folders set yet, please go to the menu and add folders you want to move files to.");
-            }
+                if (!isArrayListSizeAboveZero(destFolderPaths)) {
+                    noDestinationFolder = true;
+                } else if (!isArrayListSizeAboveZero(movingFilePaths)) {
+                    noMoveFolder = true;
+                } else {
+                    noDestinationFolder = true;
+                    noMoveFolder = true;
+                }
 
-            if (isArrayListSizeAboveZero(movingFilePaths)) {
-
-            } else {
-                System.out.println(
-                        "There are no moving file folders set yet, please go to the menu and add folders you want to move files from (desktop, download folder).");
             }
 
             recordAmount = destFolderIds.size();

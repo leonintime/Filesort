@@ -117,37 +117,73 @@ public class Filesort {
                         folder = SCANNER.next();
                         System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
                         path = SCANNER.next();
-
-                        try {
-                            sqlSuccessful = db.AddMovingFilesFolder(folder, path);
-                            if (sqlSuccessful) {
-                                System.out.println("Folder got added");
-                            } else {
-                                System.out.println("Folder couldn't get added");
+                        if (path.charAt(path.length() - 1) != '\\') {
+                            path += '\\';
+                            try {
+                                sqlSuccessful = db.AddMovingFilesFolder(folder, path);
+                                if (sqlSuccessful) {
+                                    System.out.println("Folder got added");
+                                } else {
+                                    System.out.println("Folder couldn't get added");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            try {
+                                sqlSuccessful = db.AddMovingFilesFolder(folder, path);
+                                if (sqlSuccessful) {
+                                    System.out.println("Folder got added");
+                                } else {
+                                    System.out.println("Folder couldn't get added");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
+
                         System.out.println("\n");
                         break;
                     case 2:
+
                         System.out.println("Type in the name for the folder");
                         folder = SCANNER.next();
                         System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
                         path = SCANNER.next();
-
-                        try {
-                            sqlSuccessful = db.AddDestinationFolder(folder, path);
-                            if (sqlSuccessful) {
-                                System.out.println("Folder got added");
-                            } else {
-                                System.out.println("Folder couldn't get added");
+                        if (path.charAt(path.length() - 1) != '\\') {
+                            path += '\\';
+                            try {
+                                sqlSuccessful = db.AddDestinationFolder(folder, path);
+                                if (sqlSuccessful) {
+                                    System.out.println("Folder got added");
+                                } else {
+                                    System.out.println("Folder couldn't get added");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            System.out.println("\n");
+                            break;
+                        } else {
+                            System.out.println("Type in the name for the folder");
+                            folder = SCANNER.next();
+                            System.out.println("Now enter the path for the folder (C:\\foldername\\..).");
+                            path = SCANNER.next();
+
+                            try {
+                                sqlSuccessful = db.AddDestinationFolder(folder, path);
+                                if (sqlSuccessful) {
+                                    System.out.println("Folder got added");
+                                } else {
+                                    System.out.println("Folder couldn't get added");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("\n");
+                            break;
                         }
-                        System.out.println("\n");
-                        break;
+
                 }
 
                 break;
@@ -218,6 +254,8 @@ public class Filesort {
                 switch (selectedInnerOption) {
                     case 1:
                         try {
+                            System.out.println("Moving file folders: ");
+                            db.GetAllMovingFolderIds();
                             System.out.println("Type in the number of the folder you want to remove");
                             id = SCANNER.nextInt();
                         } catch (Exception e) {
@@ -238,6 +276,8 @@ public class Filesort {
                         break;
                     case 2:
                         try {
+                            System.out.println("Destination folders: ");
+                            db.GetAllDestinationFolderIds();
                             System.out.println("Type in the number of the folder you want to remove");
                             id = SCANNER.nextInt();
                         } catch (Exception e) {
@@ -312,12 +352,13 @@ public class Filesort {
 
                 System.out.println("Now enter the extension (.pptx for example) ");
                 String extension = SCANNER.next();
+
                 try {
                     sqlSuccessful = db.ConnectExtentionToFolder(dest_fold_id, extension);
                     if (sqlSuccessful) {
-                        System.out.println("Folder got connected");
+                        System.out.println("Extension got added");
                     } else {
-                        System.out.println("Folder couldn't get connected");
+                        System.out.println("Extension couldn't get added");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
