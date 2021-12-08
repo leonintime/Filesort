@@ -1,5 +1,7 @@
 package com.filesort.org;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -374,4 +376,21 @@ public class Filesort {
                 System.out.println("Sorry, there is no such option.");
         }
     }
+
+    public static String outputMovedFile(String file, String currentDestFolderPath) {
+        return file + " -> " + currentDestFolderPath;
+    }
+
+    // public static void writeOutputToFile(String file, String currentDestFolderPath) {
+
+    //     try {
+    //         FileWriter fileWriter = new FileWriter("log.txt");
+    //         fileWriter.write(outputMovedFile(file, currentDestFolderPath));
+    //         fileWriter.close();
+    //     } catch (IOException e) {
+
+    //         e.printStackTrace();
+    //     }
+    // }
+
 }
