@@ -250,7 +250,8 @@ public class Database {
                             Files.move(Paths.get(currentMoveFromFolder + file),
                                     Paths.get(currentDestFolderPath + file));
                             fileAmount++;
-                            System.out.println(file + " -> " + currentDestFolderPath);
+                            System.out.println(Filesort.outputMovedFile(file, currentDestFolderPath));
+                            // Filesort.writeOutputToFile(file, currentDestFolderPath);
                         }
                     }
                 }
