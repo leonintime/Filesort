@@ -13,7 +13,7 @@ public class Filesort {
     private int fileAmount;
     private final String fileFolder;
     private final String currentPath;
-    private final String destinationPath;
+    private static String destinationPath;
     private static final Scanner SCANNER = new Scanner(System.in);
     public static Database db;
     private static final String[] FOLDER_OPTIONS = new String[] { "Moving files folders", "Destination folder" };
@@ -29,7 +29,7 @@ public class Filesort {
     public Filesort(String fileFolder, String currentPath, String destinationPath, String[] extension) {
         this.fileFolder = fileFolder;
         this.currentPath = currentPath;
-        this.destinationPath = destinationPath;
+        Filesort.destinationPath = destinationPath;
         this.extension = extension;
         this.fileAmount = 0;
         // CheckFoldersExist();
@@ -37,7 +37,7 @@ public class Filesort {
     }
 
     // Checks if the folders got created on the desktop
-    public void CheckFoldersExist() {
+    public static void createFolderIfNotExists() {
         try {
             if (Files.exists(Paths.get(destinationPath))) {
                 // Nothing
@@ -49,10 +49,9 @@ public class Filesort {
         } catch (Exception ex) {
             System.out.println("An error occurred while checking if the file folders exist.");
         }
-
     }
 
-    public static void ShowOptions(String[] options) {
+    public static void showOptions(String[] options) {
         System.out.println("\nChoose one of the options below:");
         int temp = 0;
         try {
@@ -65,7 +64,7 @@ public class Filesort {
         }
     }
 
-    public static void CheckedOption() throws SQLException {
+    public static void checkedOption() throws SQLException {
 
         int selectedOption = SCANNER.nextInt();
         int selectedInnerOption;
@@ -81,7 +80,8 @@ public class Filesort {
         // "Exit"
         switch (selectedOption) {
             case 1:
-                Main.SortFiles();
+                db.createFolderIfNotExists();
+                Main.sortFiles();
                 break;
 
             case 2:
@@ -94,11 +94,11 @@ public class Filesort {
                 selectedInnerOption = SCANNER.nextInt();
                 switch (selectedInnerOption) {
                     case 1:
-                        db.ShowMovingFolders();
+                        db.showMovingFolders();
                         System.out.println("\n");
                         break;
                     case 2:
-                        db.ShowDestinationFolders();
+                        db.showDestinationFolders();
                         System.out.println("\n");
                         break;
                 }
@@ -122,7 +122,7 @@ public class Filesort {
                         if (path.charAt(path.length() - 1) != '\\') {
                             path += '\\';
                             try {
-                                sqlSuccessful = db.AddMovingFilesFolder(folder, path);
+                                sqlSuccessful = db.addMovingFilesFolder(folder, path);
                                 if (sqlSuccessful) {
                                     System.out.println("Folder got added");
                                 } else {
@@ -133,7 +133,7 @@ public class Filesort {
                             }
                         } else {
                             try {
-                                sqlSuccessful = db.AddMovingFilesFolder(folder, path);
+                                sqlSuccessful = db.addMovingFilesFolder(folder, path);
                                 if (sqlSuccessful) {
                                     System.out.println("Folder got added");
                                 } else {
@@ -155,7 +155,7 @@ public class Filesort {
                         if (path.charAt(path.length() - 1) != '\\') {
                             path += '\\';
                             try {
-                                sqlSuccessful = db.AddDestinationFolder(folder, path);
+                                sqlSuccessful = db.addDestinationFolder(folder, path);
                                 if (sqlSuccessful) {
                                     System.out.println("Folder got added");
                                 } else {
@@ -173,7 +173,7 @@ public class Filesort {
                             path = SCANNER.next();
 
                             try {
-                                sqlSuccessful = db.AddDestinationFolder(folder, path);
+                                sqlSuccessful = db.addDestinationFolder(folder, path);
                                 if (sqlSuccessful) {
                                     System.out.println("Folder got added");
                                 } else {
@@ -212,7 +212,7 @@ public class Filesort {
                         }
 
                         try {
-                            sqlSuccessful = db.UpdateMovingFilesFolder(folder, path, id);
+                            sqlSuccessful = db.updateMovingFilesFolder(folder, path, id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got updated");
                             } else {
@@ -232,7 +232,7 @@ public class Filesort {
                         path = SCANNER.next();
 
                         try {
-                            sqlSuccessful = db.UpdateDestinationFolder(folder, path, id);
+                            sqlSuccessful = db.updateDestinationFolder(folder, path, id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got updated");
                             } else {
@@ -257,7 +257,7 @@ public class Filesort {
                     case 1:
                         try {
                             System.out.println("Moving file folders: ");
-                            db.GetAllMovingFolderIds();
+                            db.getAllMovingFolderIds();
                             System.out.println("Type in the number of the folder you want to remove");
                             id = SCANNER.nextInt();
                         } catch (Exception e) {
@@ -265,7 +265,7 @@ public class Filesort {
                         }
 
                         try {
-                            sqlSuccessful = db.DeleteMovingFilesFolder(id);
+                            sqlSuccessful = db.deleteMovingFilesFolder(id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got removed");
                             } else {
@@ -279,7 +279,7 @@ public class Filesort {
                     case 2:
                         try {
                             System.out.println("Destination folders: ");
-                            db.GetAllDestinationFolderIds();
+                            db.getAllDestinationFolderIds();
                             System.out.println("Type in the number of the folder you want to remove");
                             id = SCANNER.nextInt();
                         } catch (Exception e) {
@@ -287,7 +287,7 @@ public class Filesort {
                         }
 
                         try {
-                            sqlSuccessful = db.DeleteDestinationFolder(id);
+                            sqlSuccessful = db.deleteDestinationFolder(id);
                             if (sqlSuccessful) {
                                 System.out.println("Folder got removed");
                             } else {
@@ -302,10 +302,10 @@ public class Filesort {
 
             case 6:
                 System.out.println("Destination folders: ");
-                db.GetAllDestinationFolderIds();
+                db.getAllDestinationFolderIds();
                 System.out.println("\n");
                 System.out.println("Moving file folders: ");
-                db.GetAllMovingFolderIds();
+                db.getAllMovingFolderIds();
 
                 System.out.println(" Number of the folder where the files are supposed to be moved away from");
                 try {
@@ -326,7 +326,7 @@ public class Filesort {
                 }
 
                 try {
-                    sqlSuccessful = db.ConnectFolders(mff_id, dest_fold_id);
+                    sqlSuccessful = db.connectFolders(mff_id, dest_fold_id);
                     if (sqlSuccessful) {
                         System.out.println("Folders got connected");
                     } else {
@@ -340,7 +340,7 @@ public class Filesort {
 
             case 7:
                 System.out.println("Destination folders: ");
-                db.GetAllDestinationFolderIds();
+                db.getAllDestinationFolderIds();
                 System.out.println("\n");
 
                 System.out.println("Number of destination folder you want to connect an extension to");
@@ -356,7 +356,7 @@ public class Filesort {
                 String extension = SCANNER.next();
 
                 try {
-                    sqlSuccessful = db.ConnectExtentionToFolder(dest_fold_id, extension);
+                    sqlSuccessful = db.connectExtentionToFolder(dest_fold_id, extension);
                     if (sqlSuccessful) {
                         System.out.println("Extension got added");
                     } else {
@@ -380,17 +380,5 @@ public class Filesort {
     public static String outputMovedFile(String file, String currentDestFolderPath) {
         return file + " -> " + currentDestFolderPath;
     }
-
-    // public static void writeOutputToFile(String file, String currentDestFolderPath) {
-
-    //     try {
-    //         FileWriter fileWriter = new FileWriter("log.txt");
-    //         fileWriter.write(outputMovedFile(file, currentDestFolderPath));
-    //         fileWriter.close();
-    //     } catch (IOException e) {
-
-    //         e.printStackTrace();
-    //     }
-    // }
 
 }

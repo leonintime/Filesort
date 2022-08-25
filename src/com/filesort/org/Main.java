@@ -23,7 +23,7 @@ public class Main {
                 System.out.println("Searching for files...");
                 System.out.println("Moving Files:");
                 try {
-                    SortFiles();
+                    sortFiles();
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -31,11 +31,11 @@ public class Main {
                 countRunAmount++;
             } else {
                 try {
-                    Filesort.ShowOptions(OPTIONS);
-                    Filesort.CheckedOption();
+                    Filesort.showOptions(OPTIONS);
+                    Filesort.checkedOption();
                 } catch (Exception e) {
-                     System.out.println(e.getMessage());
-                     endProgram = true;
+                    System.out.println(e.getMessage());
+                    endProgram = true;
                 }
             }
 
@@ -43,11 +43,9 @@ public class Main {
 
     }
 
-    public static void SortFiles() throws SQLException {
-
-        // Files in download folder are getting moved to the destination folder
-        Filesort.db.MoveFiles();
-
+    public static void sortFiles() throws SQLException {
+        Filesort.db.createFolderIfNotExists();
+        Filesort.db.moveFiles();
     }
 
 }
