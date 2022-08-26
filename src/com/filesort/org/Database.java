@@ -11,10 +11,12 @@ public class Database {
 
     private Connection conn;
     private Statement statement;
+    public Log log;
     private static String DB_CON;
     private static String SELECT_SQL;
     private static String INSERT_SQL;
     private static String UPDATE_SQL;
+    private static final String LOG_FILE = "log.txt";
     private static final String SELECT = "SELECT ";
     private static final String DISTINCT = "DISTINCT ";
     public static final String FROM = " FROM ";
@@ -98,6 +100,14 @@ public class Database {
         Database.DB_CON = DB_CON;
         conn = DriverManager.getConnection(DB_CON);
         this.statement = conn.createStatement();
+
+        try {
+            Log log = new Log(LOG_FILE);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean getNoDestinationFolder() {
@@ -274,7 +284,6 @@ public class Database {
                                     Paths.get(currentDestFolderPath + file));
                             fileAmount++;
                             System.out.println(Filesort.outputMovedFile(file, currentDestFolderPath));
-                            // Filesort.writeOutputToFile(file, currentDestFolderPath);
                         }
                     }
                 }
@@ -284,8 +293,17 @@ public class Database {
 
         } catch (NullPointerException | IOException | SQLException ex) {
             closeCon();
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }
+
+        if (fileAmount > 1) {
+            System.out.println(fileAmount + " files got moved");
+        } else if (fileAmount == 0) {
+            System.out.println("There was no file to move");
+        } else {
+            System.out.println(fileAmount + " file got moved");
+        }
+
     }
 
     public ResultSet getConnectedFolders() throws SQLException {
@@ -454,4 +472,5 @@ public class Database {
             e.printStackTrace();
         }
     }
+
 }

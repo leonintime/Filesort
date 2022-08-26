@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 public class Filesort {
 
@@ -33,7 +35,6 @@ public class Filesort {
         this.extension = extension;
         this.fileAmount = 0;
         // CheckFoldersExist();
-
     }
 
     // Checks if the folders got created on the desktop
