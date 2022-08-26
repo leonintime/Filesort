@@ -41,7 +41,6 @@ public class Log {
 
     public void logInfo(String text) {
         try {
-
             logger.setLevel(Level.INFO);
             logger.info(text);
 

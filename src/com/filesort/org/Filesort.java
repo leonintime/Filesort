@@ -355,6 +355,7 @@ public class Filesort {
 
                 System.out.println("Now enter the extension (.pptx for example) ");
                 String extension = SCANNER.next();
+                extension = addDotToExtension(extension);
 
                 try {
                     sqlSuccessful = db.connectExtentionToFolder(dest_fold_id, extension);
@@ -380,6 +381,17 @@ public class Filesort {
 
     public static String outputMovedFile(String file, String currentDestFolderPath) {
         return file + " -> " + currentDestFolderPath;
+    }
+
+    public static String addDotToExtension(String extension) {
+        String extensionWithDot = ".";
+
+        if (!extension.contains(".")) {
+            for (int i = 0; i < extension.length(); i++) {
+                extensionWithDot += extension.charAt(i);
+            }
+        }
+        return extensionWithDot;
     }
 
 }
